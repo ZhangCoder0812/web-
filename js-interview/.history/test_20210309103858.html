@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function A() {
+    this.name = 'wade'
+}
+
+function myNew() {
+    let o = new Object()
+    let _controcutor = [].shift.call(arguments)
+    o.__proto__ = _controcutor.prototype
+    let res =_controcutor.app
+
+}
+
+//let a = myNew(A)
+let a = new A()
+console.log(a)
+    </script>
+  </body>
+</html>

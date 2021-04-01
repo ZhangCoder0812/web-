@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Function.prototype.call = function (ctx) {
+        ctx = ctx ? Object(ctx) : window;
+        ctx.fn = this;
+        let args = [...arguments].slice(1);
+        let res = ctx.fn(...args);
+        delete ctx.fn;
+        return ctx;
+      };
+
+      function fn(args) {
+        console.log(this.name, args);
+      }
+      let obj = {
+        name: "zhang",
+      };
+      fn.apply(obj, [1, 2, 3]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+
+    <div id="box">
+      <button data-index="1">1</button>
+      <button data-index="2">2</button>
+      <button data-index="3">3</button>
+      <button data-index="4">4</button>
+    </div>
+    
+    <script>
+      let btns = document.querySelectorAll("button");
+      // for (var i = 0; i < btns.length; i++) {
+      //   btns[i].onclick = function () {
+      //     console.log(i);
+      //     console.log(this);
+      //   };
+      // }
+
+      // for (var i = 0; i < btns.length; i++) {
+      //   btns[i].onclick = function (i) {  直接传进来不行 这样i变成了事件对象
+      //     console.log(i);
+      //   };
+      // }
+
+      // 方式一： 改为let
+      // for (let i = 0; i < btns.length; i++) {
+      //   btns[i].onclick = function () {
+      //     console.log(i);
+      //   };
+      // }
+
+      // 方式二： 闭包
+      // for (var i = 0; i < btns.length; i++) {
+      //   (function (i) {
+      //     btns[i].onclick = function () {
+      //       console.log(i);
+      //     };
+      //   })(i);
+      // }
+
+      // 方式三： 闭包
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = (function () {
+          return function () {
+            console.log(i);
+          };
+        })();
+      }
+
+      // 方式四： bind
+      for (var i = 0; i < btns.length; i++) {
+        let fn = function () {
+          console.log(i);
+        };
+        btns[i].onclick = fn.bind(null, i);
+      }
+
+      // 方式五： 自定义属性
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].index = i; // btns[i]获取节点就是开辟一个堆内存 这种设置自定义属性的方式是向堆内存中增加属性 只能通过点的方式获取
+        btns[i].onclick = function () {
+          console.log(this.index);
+        };
+      }
+
+      // 方式六： 事件委托  性能最好
+      box.onclick = function (e) {
+        let target = e.target;
+        if (target.tagName === "BUTTON") { // setAttribute 是直接操作dom结构，只能通过getAttribute去获取
+          console.log(target.getAttribute("data-index"));
+        }
+      };
+
+
+    </script>
+  </body>
+</html>

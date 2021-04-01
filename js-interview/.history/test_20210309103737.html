@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function A() {
+    this.name = 'wade'
+}
+
+function myNew() {
+    let [_constructor, ...args] = [...arguments]
+    let obj = Object.create(null)
+    obj.__proto__ = _constructor.prototype
+    let o = _constructor.apply(obj, ...args)
+    return o instanceof Object ? o : obj
+
+}
+
+//let a = myNew(A)
+let a = new A()
+console.log(a)
+    </script>
+  </body>
+</html>

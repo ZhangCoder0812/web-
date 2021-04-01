@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">点击</button>
+    <script>
+
+function ajax(url, method = 'GET') {
+    if (!url) {
+        throw new Error('url is required')
+    }
+    let xhr = new XMLHttpRequest()
+    xhr.open(method, url, true) // true 使用异步
+    xhr.send();
+    xhr.onreadystatechange = function () { // 每当 readyState 属性改变时，就会调用该函数
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            return xhr.responseText
+        }
+    }
+}
+
+ajax('https://api.sermatec-cloud.com/energy/getDailyDisCharge')
+      
+    </script>
+  </body>
+</html>

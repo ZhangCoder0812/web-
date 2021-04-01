@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Function.prototype.apply = function (ctx, args) {
+        ctx = ctx ? Object(ctx) : window;
+        ctx.fn = this;
+        if (args && !Array.isArray(args)) {
+          throw new TypeError("error");
+        }
+        let res = ctx.fn(...args);
+        delete ctx;
+        return res;
+      };
+
+      function fn() {
+        console.log(this.name, arguments);
+      }
+      let obj = {
+        name: "awde",
+      };
+
+      fn.apply(obj, [1, 2, 3, 4]);
+    </script>
+  </body>
+</html>

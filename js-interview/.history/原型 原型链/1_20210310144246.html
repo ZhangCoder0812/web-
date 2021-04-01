@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function fn(args) {
+        console.log(this.name, args);
+      }
+      let obj = {
+        name: "zhang",
+      };
+      fn.apply(obj, [23, 3]);
+
+      function fn1(a) {
+        console.log(this, 11, a);
+      }
+
+      function fn2() {
+        console.log(this, 22, arguments);
+      }
+
+      fn1.apply(fn2, [7, 8, 9]);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">点击</button>
+    <script>
+      // 去掉 isFirst 第一次也要延迟执行
+      function throtate(fn, wait) {
+        let timer;
+        let isFirst = true;
+        return function () {
+          if (isFirst) {
+            fn();
+            isFirst = false;
+            return;
+          }
+          if (!timer) {
+            timer = setTimeout(() => {
+              fn();
+              timer = null;
+            }, wait);
+          }
+        };
+      }
+
+      function submit() {
+        console.log(123);
+      }
+
+      let fn = throtate(submit, 2000); // 这里用变量接受是为了保存上次的
+                                      //timer 利用闭包的特性
+
+      btn.onclick = function () {
+        fn();
+      };
+
+
+    </script>
+  </body>
+</html>

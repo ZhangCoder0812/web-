@@ -1,0 +1,1 @@
+function () { var a = getUrlParam('http://www.nowcoder.com?key=1& 

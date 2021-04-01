@@ -1,0 +1,1 @@
+function () { var a = getUrlParam('http://www.nowcoder.com?key=1&key=2&key=3&key=4&test=4#hehe', 'key'); return a.join('') === '1234'; }

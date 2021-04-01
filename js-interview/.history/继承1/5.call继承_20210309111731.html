@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function A() {
+        this.name = "a";
+        this.cars = ["奔驰", "宝马", "奥迪"];
+        this.say = function () {
+          console.log(123);
+        };
+      }
+      A.prototype.age = 12;
+      console.log(A.prototype);
+
+      function B() {}
+      let b1 = new B();
+      console.log(b1.name);
+      b1.cars.push("法拉利");
+      console.log(b1.cars); // ["奔驰", "宝马", "奥迪"."法拉利"]
+      let b2 = new B();
+      console.log(b2.cars); // ["奔驰", "宝马", "奥迪"."法拉利"]  导致其他实例也受影响
+
+      /* 
+        原型链继承:
+           - 父类中有引用类型属性，其中一个实例改变此属性 导致其他实例都会共享
+           - 不能给父类构造函数传参
+           - 需要手动添加子类 constructor 构造函数
+       */
+    </script>
+  </body>
+</html>

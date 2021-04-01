@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function A(x) {
+        this.x = x;
+      }
+      A.prototype.sayA = function () {
+        console.log("A");
+      };
+
+      function B(y) {
+        this.y = y;
+      }
+
+      // 核心 修改子类的原型
+      B.prototype = new A(100);
+      B.prototype.constructor = B; // 将丢失的构造函数补上
+
+      let b = new B(200);
+      console.log(b.x); // 100
+      b.sayA(); // A
+
+      B.prototype.sayB = function () {
+        console.log("B");
+      };
+
+      console.log(b);
+    </script>
+  </body>
+</html>

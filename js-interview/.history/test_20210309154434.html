@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      
+      function A(x) {
+        this.x = x;
+        this.arr = [1, 2, 3];
+      }
+      A.prototype.sayA = function () {
+        console.log("A");
+      };
+
+      function B(...args) {
+        A.call(this, ...args);
+      }
+
+      /* 
+        使用Object.create 创建的空实例做桥梁 避免直接实例化A上的属性 浪费内存
+        Object.create(obj) 创建一个空对像 让空对象__proto__指向 obj
+      */
+      B.prototype = Object.create(A.prototype); 
+      B.constructor = B;
+
+      let b = new B(200);
+      b.arr.push(4);
+      b.sayA(); // A
+      console.log(b.arr); // [1,2,3,4]
+
+      let b2 = new B(200);
+      console.log(b2.arr); // [1,2,3]
+
+
+    </script>
+  </body>
+</html>

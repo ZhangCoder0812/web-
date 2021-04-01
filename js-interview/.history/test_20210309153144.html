@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 
+       
+      call继承：子类中执行 父类.call(this)
+              在子类中把父类当作普通函数执行，传入子类的this，相当于
+              在子类中定义两父类的方法和属性
+
+        - 只能继承父类私有的属性和方法（原型链上的属性和方法继承不了）
+        - 父类私有的变为子类私有的
+        - 浪费内存 每创建一个实例 都会创建新的内存去存放属性和方法
+        - 子类的一个实例修改父类属性 不会影响其他实例
+      */
+
+      function A(x) {
+        this.x = x;
+        this.arr = [1, 2, 3];
+      }
+      A.prototype.sayA = function () {
+        console.log("A");
+      };
+
+      function B(...args) {
+        A.call(this, ...args);
+      }
+
+      B.prototype = new A(100);
+      B.constructor = B;
+
+      let b = new B(200);
+      b.arr.push(4);
+      b.sayA() // A
+      console.log(b.arr); // [1,2,3,4]
+
+      let b2 = new B(200);
+      console.log(b2.arr); // [1,2,3]
+      
+    </script>
+  </body>
+</html>

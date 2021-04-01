@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function fn(args) {
+        console.log(this.name, args);
+      }
+      let obj = {
+        name: "zhang",
+      };
+      fn.apply(obj, [23, 3]);
+      var person = {
+        fullName: function (city) {
+          console.log(city);
+        },
+      };
+      var person1 = {
+        firstName: "John",
+        lastName: "Doe",
+      };
+      person.fullName.apply(person1, ["Oslo", "Norway"]);
+    </script>
+  </body>
+</html>
