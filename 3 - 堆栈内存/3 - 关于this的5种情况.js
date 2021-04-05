@@ -5,7 +5,7 @@
     - 事件绑定
     - 函数执行「普通函数执行 成员访问 匿名函数 回调函数」
     - 构造函数
-    - 箭头函数
+    - 箭头函数 没有this 向上级查找 call/apply/bind改变不了箭头函数的this
     - 基于call/apply/bind改变this
 
 全局上下文的 this->window
@@ -58,7 +58,16 @@
               console.log(this); 
             })();
 
-        3. 回调函数：this一般为winodw/global ，特俗情况具体分析
+        3. 箭头函数    
+            let obj = {
+              x: 0,
+              fn: () => {
+                console.log(this); // window
+              },
+            };
+            obj.fn();
+
+        4. 回调函数：this一般为winodw/global ，特俗情况具体分析
             let arr = [1, 2, 3];
             arr.forEach(function() {
                 console.log(this);   window
@@ -67,10 +76,26 @@
             forEach第二个参数可改变this，但回调函数要是箭头this还是window
             arr.forEach(function() {
                 console.log(this);   { name: 'wade' } 
-            },{name:"wade"});       
+            },{name:"wade"});      
             
+            let obj = {
+              x: 0,
+              fn() {
 
+                console.log(this); // obj
 
+                setTimeout(function () {
+                  console.log(this); // window
+                }, 1000);
+
+                setTimeout(() => {
+                  console.log(this); // obj 箭头函数没有this 向上找
+                }, 1000);
+
+              },
+            };
+            obj.fn();
+            
 */
 
 var x = 3,
