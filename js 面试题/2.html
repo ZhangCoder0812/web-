@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* 
+
+        编写 queryURLParams 方法获取url中的参数
+
+          @1 
+          获取URL地址中，问号参数值「或者哈希值」
+            {
+                lx:'1',
+                from:'wx',
+                HASH:'video' 
+            }
+          
+          @2 
+            'lx=1&from=wx' 被叫做 urlencoded 格式字符串
+
+      */
+
+      String.prototype.queryURLParams = function (attr) {
+        // this -> url
+        let link = document.createElement("a"); // 利用a标签的特点自动解析
+        link.href = this;
+        let { search, hash } = link;
+        let obj = {};
+        if (hash) {
+          //  #video
+          obj["_HASH"] = hash.substring(1);
+        }
+        if (search) {
+          // ?lx=1&from=wx
+          search = search.substring(1).split("&");
+          search.forEach((item) => {
+            let [key, value] = item.split("=");
+            obj[key] = value;
+          });
+        }
+        // 没传就自动解析整个字符串
+        return typeof attr !== "undefined" ? obj[attr] : obj;
+      };
+
+      let url = "http://www.zhufengpeixun.cn/?lx=1&from=wx#video";
+
+      console.log(url.queryURLParams("from")); // wx
+      console.log(url.queryURLParams("_HASH")); // video
+      console.log(url.queryURLParams()); // {_HASH: "video", lx: "1", from: "wx"}
+
+      // 方式二 ： 利用正则
+      String.prototype.queryURLParams = function (attr) {
+        let obj = {};
+        this.replace(/#([^?=&#]+)/g, (_, $1) => (obj["_HASH"] = $1));
+        this.replace(/([^?=&#]+)=([^?=&#])/g, (_, $1, $2) => (obj[$1] = $2));
+        return typeof attr !== "undefined" ? obj[attr] : obj;
+      };
+    </script>
+  </body>
+</html>
