@@ -1,5 +1,0 @@
-/* 
-
- commonJs：node 
-
-*/
