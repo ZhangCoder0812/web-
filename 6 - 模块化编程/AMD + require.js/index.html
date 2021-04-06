@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        - data-main属性的作用是，指定网页程序的主模块,这个属性指定的js将在加载完js后处理
+          当script标签指定data-main属性时，js会默认的将data-main指定的js为根路径
+          require.js在加载的时候会检查data-main属性，当加载完毕，data-main属性规
+          定的js文件会第一个被require.js加载并执行。
+        - src意思就是要加载src地址对应的js文件require.js
+        - require.js默认的文件后缀名是js，所以可以把index.js简写成index
+     -->
+    <script data-main="./index" src="lib/require.js"></script>
+</body>
+</html>
