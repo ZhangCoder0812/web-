@@ -1,7 +1,0 @@
-
-
-function throtate(){
-
-}
-
-function 

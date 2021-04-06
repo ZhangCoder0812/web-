@@ -1,3 +1,0 @@
-
-
-Promise.resolve('4')

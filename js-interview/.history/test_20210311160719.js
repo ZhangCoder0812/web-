@@ -1,9 +1,0 @@
-
-
-function throtate(){
-
-}
-
-function submit(){
-    
-}
