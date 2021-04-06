@@ -49,15 +49,13 @@ const curring = (fn, arr = []) => {
 }
 
 let newSum = curring(sum)
-
 console.log(newSum(1)(2)(3)(4)(5)) // 柯理化函数
-
 console.log(newSum(1, 2)(3)(4, 5)) // 偏函数 类似柯理化函数 传入参数形式不固定
 
 
 // --------------------------------------------  华丽的分割线 ------------------------------------
 
-// 函数参数长度不固定的柯理化
+// 函数传参长度不固定  
 function curring() {
   let argsArr = [];
   const add = (...args) => {

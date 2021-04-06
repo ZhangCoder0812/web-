@@ -66,7 +66,6 @@
          多次触发事件 以最后一次为准 使用闭包保存每次的 timer 变量，
         清除上次的 timer 达到防抖效果
     */
-   
     function debunce(fn, wait) {
       let timer;
       return function (args) {

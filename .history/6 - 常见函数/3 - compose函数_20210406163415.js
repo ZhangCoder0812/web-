@@ -8,15 +8,16 @@ const div = (x) => x / 2;
 
 let res = div(mul(add(2)));
 console.log(res);
-
 /* 
-    上面这种写法可读性太差了，我们可以构建一个compose函数，接受任意多个函数参数，
-    「这些函数只接受一个参数」，最终执行compose返回的参数得到结果。
-
-    如：let newFn = compose(div, mul, add)
-        newFn(2) => 相当于 div(mul(add(2)))
+上面这种写法可读性太差了，我们可以构建一个compose函数，接受任意多个函数参数，
+「这些函数只接受一个参数」，最终执行compose返回的参数得到结果。
+如：let newFn = compose(div, mul, add)
+newFn(2) => 相当于 div(mul(add(2)))
 */
 
+const add = (x) => x + 1;
+const mul = (x) => x * 3;
+const div = (x) => x / 2;
 
 // 方式一： 借用reduceRight 每次迭代执行函数 正着来一个个执行
 function compose(...fnList) {

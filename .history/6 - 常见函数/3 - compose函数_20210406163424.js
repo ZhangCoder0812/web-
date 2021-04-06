@@ -12,9 +12,9 @@ console.log(res);
 /* 
     上面这种写法可读性太差了，我们可以构建一个compose函数，接受任意多个函数参数，
     「这些函数只接受一个参数」，最终执行compose返回的参数得到结果。
-
+    
     如：let newFn = compose(div, mul, add)
-        newFn(2) => 相当于 div(mul(add(2)))
+    newFn(2) => 相当于 div(mul(add(2)))
 */
 
 
