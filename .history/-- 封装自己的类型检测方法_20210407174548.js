@@ -1,0 +1,2 @@
+
+let class2
