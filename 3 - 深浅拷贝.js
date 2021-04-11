@@ -1,9 +1,4 @@
-/* 
 
-
-
-
-*/
 var clone = function () {
   var target = arguments[0],
     deep = false,
