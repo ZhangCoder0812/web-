@@ -13,6 +13,12 @@
 
  resolve通知存的方法执行 then方法再后写的
 
+ 为什么await 后面promise失败 下面代码就不执行了
+
+ 为什么 console.log(1) 先于resovle(1) 输出 
+
+ 同时发生
+
  new Promise((resolve) => {
   console.log("promise1");
   resolve();
