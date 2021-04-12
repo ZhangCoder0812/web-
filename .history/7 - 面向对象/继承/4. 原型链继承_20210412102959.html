@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        原型继承 「后台：子类继承父类，会把父类的方法copy一份给子类」
+        特点：和传统的后台语言继承不一样，并没有把父类的方法copy一份给子类，而是建立
+             子类原型和父类原型之间的原型链指向，后期子类实例访问父类中提供的方法和属性，
+             也是基于__proto__原型链一层层查找的。 
+        + 父类赋予其实例的私有属性 会变成子类实例的共有属性
+        + 子类实例可以基于原型链修改父类原型上的方法和属性，会对父类的其他实例产生影响   
+        
+        继承：子类继承父类中的属性和方法
+            目的是让子类的实例使用父类的属性和方法
+
+        类中的属性和方法是私有的
+        原型链上的属性和方法是共有的
+
+        原型继承（改变原型链指向）
+              让父类中的属性和方法在子类的原型链上
+
+              子类.prototype = new 父类
+              子类.prototype.constructor = 子类
+
+              - 基于改变原型链完成
+              - 子类可以重写父类的方法和属性，导致父类其他实例受影响
+              - 父类中私有或公有的属性和方法最后都变成子类中公有的属性和方法
+              - 父类中有引用类型属性，其中一个实例改变此属性 导致其他实例都会共享
+              - 需要手动添加子类 constructor 构造函数
+              
+      */
+      function A() {
+        this.name = "a";
+        this.cars = ["奔驰", "宝马", "奥迪"];
+        this.say = function () {
+          console.log(123);
+        };
+      }
+      A.prototype.age = 12;
+      console.log(A.prototype);
+
+      function B() {}
+      /* 错误写法
+        B.prototype = A.prototype;   
+        因为这样改变子类的prototype 父类的prototype就会收到影响
+       */
+      B.prototype = new A();
+      B.prototype.constructor = B;
+
+      let b1 = new B();
+      console.log(b1.name);
+      b1.cars.push("法拉利");
+      console.log(b1.cars); // ["奔驰", "宝马", "奥迪"."法拉利"]
+      let b2 = new B();
+      console.log(b2.cars); // ["奔驰", "宝马", "奥迪"."法拉利"]  导致其他实例也受影响
+
+      /* 
+        原型链继承:
+           - 父类中有引用类型属性，其中一个实例改变此属性 导致其他实例都会共享
+           - 不能给父类构造函数传参
+           - 需要手动添加子类 constructor 构造函数
+       */
+    </script>
+  </body>
+</html>
