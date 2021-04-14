@@ -1,5 +1,3 @@
-
-
 //  compose函数：把一系列处理数据的函数像管道一样连接起来，然后通过管道得到结果。
 
 const add = (x) => x + 1;
@@ -16,7 +14,6 @@ console.log(res);
     如：let newFn = compose(div, mul, add)
         newFn(2) => 相当于 div(mul(add(2)))
 */
-
 
 // 方式一： 借用reduceRight 每次迭代执行函数 正着来一个个执行
 function compose(...fnList) {
