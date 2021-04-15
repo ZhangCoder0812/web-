@@ -61,7 +61,7 @@
             timer = null;
           });
           break;
-        default:
+        default: // 不知道此时Promise的状态就存起来
           _this.onfulfilledCallbacks.push(onfulfilled);
           _this.onrejectedCallbacks.push(onrejected);
       }
