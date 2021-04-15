@@ -17,6 +17,8 @@
 
  为什么 console.log(1) 先于resovle(1) 输出 
 
+ 同步异步编程 -> 题目7
+
  同时发生
 
  new Promise((resolve) => {

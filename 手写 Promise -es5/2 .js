@@ -42,44 +42,50 @@
   }
 
   function resolvePromise(promise, x, resolve, reject) {
-    // promise 每一次then返回的新的promise实例   
-    if (x === promise) throw new TypeError('Chaining cycle detected for promise #<Promise>')
+    // promise 每一次then返回的新的promise实例
+    if (x === promise)
+      throw new TypeError("Chaining cycle detected for promise #<Promise>");
     if (x !== null && /^(object|function)$/i.test(typeof x)) {
       let then;
-      try { // 获取then方法可能报错
-        then = x.then
+      try {
+        // 获取then方法可能报错
+        then = x.then;
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-      if (typeof then === 'function') {
+      if (typeof then === "function") {
         let called;
         try {
-          then.call(x, function onfulfilled(y) {
-            if (called) return;
-            called = true
-            resolvePromise(promise, x, resolve, reject)
-          }, function onrejected(r) {
-            if (called) return;
-            called = true
-            reject(r)
-          })
+          then.call(
+            x,
+            function onfulfilled(y) {
+              if (called) return;
+              called = true;
+              resolvePromise(promise, y, resolve, reject);
+            },
+            function onrejected(r) {
+              if (called) return;
+              called = true;
+              reject(r);
+            }
+          );
         } catch (e) {
           if (called) return;
-          called = true
-          reject(e)
+          called = true;
+          reject(e);
         }
         return;
       }
     }
-    resolve(x)
+    resolve(x);
   }
 
   function common(callback, value, promise, resolve, reject) {
     try {
       let x = callback(value);
-      resolvePromise(promise, x, resolve, reject)
+      resolvePromise(promise, x, resolve, reject);
     } catch (e) {
-      reject(e)
+      reject(e);
     }
   }
 
@@ -88,89 +94,93 @@
     then: function (onfulfilled, onrejected) {
       let _this = this,
         promise;
-      if (typeof onfulfilled !== 'function') {
+      if (typeof onfulfilled !== "function") {
         onfulfilled = function (data) {
-          return data
-        }
+          return data;
+        };
       }
-      if (typeof onrejected !== 'function') {
+      if (typeof onrejected !== "function") {
         onrejected = function (reason) {
-          throw reason
-        }
+          throw reason;
+        };
       }
       promise = new Promise(function (resolve, reject) {
         switch (_this.state) {
           case "fulfilled":
             setTimeout(() => {
-              common(onfulfilled, _this.value, promise, resolve, reject)
-            })
+              common(onfulfilled, _this.value, promise, resolve, reject);
+            });
             break;
           case "rejected":
             setTimeout(() => {
-              common(onrejected, _this.value, promise, resolve, reject)
-            })
+              common(onrejected, _this.value, promise, resolve, reject);
+            });
             break;
           default:
             // 包了一层便于在这里执行获取x
             _this.onfulfilledCallbacks.push(function () {
-              common(onfulfilled, _this.value, promise, resolve, reject)
+              common(onfulfilled, _this.value, promise, resolve, reject);
             });
             _this.onrejectedCallbacks.push(function () {
-              common(onrejected, _this.value, promise, resolve, reject)
+              common(onrejected, _this.value, promise, resolve, reject);
             });
         }
-      })
-      return promise
+      });
+      return promise;
     },
     // catch 就是一个没有成功回调的then方法
     catch: function (onrejected) {
-      return this.then(null, onrejected)
+      return this.then(null, onrejected);
     },
-    finally: function () { },
+    finally: function () {},
   };
 
   // 静态属性
   //Promise.resolve返回一个成功的Promise实例
   Promise.resolve = function (result) {
     return new Promise(function (resolve) {
-      resolve(result)
-    })
+      resolve(result);
+    });
   };
   //Promise.reject返回一个失败的Promise实例
   Promise.reject = function (reason) {
     return new Promise(function (_, reject) {
-      reject(reason)
-    })
+      reject(reason);
+    });
   };
   function isPromise(p) {
-    return (typeof p === 'object' || typeof p === 'function') && typeof p.then === 'function'
+    return (
+      (typeof p === "object" || typeof p === "function") &&
+      typeof p.then === "function"
+    );
   }
   Promise.all = function (promises) {
     if (!Array.isArray(promises)) {
-      throw new TypeError('promises must be an Array')
+      throw new TypeError("promises must be an Array");
     }
     let n = 0,
       result = [];
     return new Promise((resolve, reject) => {
       for (let i = 0; i < promises.length; i++) {
-        let p = promises[i]
-        if (!p) { // 不是promise变成promise
-          p = Promise.resolve(p)
+        let p = promises[i];
+        if (!p) {
+          // 不是promise变成promise
+          p = Promise.resolve(p);
         }
-        p.then(data => {
+        p.then((data) => {
           n++;
           if (n === promises.length) {
-            resolve(result)
+            resolve(result);
           } else {
-            result[i] = data
+            result[i] = data;
           }
-        }).catch(reason => {
-          reject(reason)
-        })
+        }).catch((reason) => {
+          reject(reason);
+        });
       }
-    })
+    });
   };
-  Promise.any = function () { };
+  Promise.any = function () {};
 
   if (typeof Symbol !== "undefined") {
     Promise.prototype[Symbol.toStringTag] = "Promise";
@@ -241,4 +251,4 @@ Promise.defer = Promise.deferred = function () {
   return result;
 };
 
-module.exports = Promise;
+//module.exports = Promise;
