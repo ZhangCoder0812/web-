@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+
+       项目中我们可能会出现多个事件都需要发布订阅来管理，这时候就需要多个事件池分别管控对应的事件。
+       - 使用 面向对象 来实现多个事件池
+       - 每个实例都有自己的事件池
+       - subscribe/unSubscribe/fire 方法是公用的
+     -->
+    <script>
+      class Sub {
+        pond = [];
+        subscribe(fn) {
+          let pond = this.pond;
+          if (!pond.includes(fn)) {
+            pond.push(fn);
+          }
+          return function unSubscribe() {
+            pond = pond.filter((item) => item !== fn);
+          };
+        }
+        fire(...params) {
+          this.pond.forEach((item) => {
+            if (typeof item === "function") {
+              item(...params);
+            }
+          });
+        }
+      }
+
+      let sub1 = new Sub();
+      sub1.subscribe((...params) => {
+        console.log(1, ...params);
+      });
+      sub1.subscribe(() => {
+        console.log(2);
+      });
+
+      let sub2 = new Sub();
+      sub2.subscribe(() => {
+        console.log(3);
+      });
+      sub2.subscribe(() => {
+        console.log(4);
+      });
+      setTimeout(() => {
+        sub1.fire(10, 20, 30);
+        console.log("--------");
+        sub2.fire();
+      }, 2000);
+    </script>
+  </body>
+</html>
