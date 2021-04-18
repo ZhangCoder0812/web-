@@ -23,6 +23,14 @@
 
  同时发生
 
+ async-pool
+
+ 并发控制方案1
+
+ transformRequest
+
+ axios失败是哪个层面的 请求地址不存在/端口不存在
+
  new Promise((resolve) => {
   console.log("promise1");
   resolve();

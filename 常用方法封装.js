@@ -246,7 +246,6 @@ const merge = function () {
   }
   for (; i < length; i++) {
     options = arguments[i];
-    // 问题 ???? 这里判读的意义是什么 为什么不是判断typeof target !== "object"
     if (options == null) {
       continue;
     }
