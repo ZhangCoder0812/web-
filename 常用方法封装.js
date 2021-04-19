@@ -174,7 +174,7 @@ const each = function (obj, callback) {
   }
   if (typeof callback !== "function") {
     // 传入的callback不是函数就赋值个函数 防止报错
-    callback = function () { };
+    callback = function () {};
   }
   let i = 0;
   if (isArrayLike(obj)) {
@@ -300,3 +300,5 @@ let obj2 = {
 obj2.xxx = obj2; // 循环引用
 console.log(merge(true, obj1, obj2)); // obj1会被改变
 console.log(merge(true, {}, obj1, obj2)); // 加个{} 不会影响obj1
+
+export { isPlainObject };

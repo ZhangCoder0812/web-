@@ -31,6 +31,8 @@
 
  axios失败是哪个层面的 axios封装 请求地址不存在/端口不存在/断网 
 
+ fetch封装成功回调 result结果没有status statusText
+
  new Promise((resolve) => {
   console.log("promise1");
   resolve();
