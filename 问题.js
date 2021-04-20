@@ -39,6 +39,8 @@
 
  window.jsonp -> undefined
 
+ HTML为什么不能做强缓存
+
  new Promise((resolve) => {
   console.log("promise1");
   resolve();
