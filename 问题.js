@@ -33,13 +33,17 @@
 
  fetch封装成功回调 result结果没有status statusText
 
- jsp 前端写静态页面
+ jsp 前端写静态页面 数据如何让渲染
 
  跨域只存在浏览器中？小程序 App会不会跨域
 
  window.jsonp -> undefined
 
  HTML为什么不能做强缓存
+
+ host跨域 协议 端口
+
+ html中pre和code标签
 
  new Promise((resolve) => {
   console.log("promise1");
