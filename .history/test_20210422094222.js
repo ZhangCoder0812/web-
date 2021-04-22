@@ -24,6 +24,3 @@ async function fn() {
 
 fn();
 
-
-
-
