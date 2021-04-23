@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            canvas {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </body>
+</html>
+
+<script>
+    let canvas = document.querySelector("#canvas");
+    let ctx = canvas.getContext("2d");
+    let x = canvas.width / 2,
+        y = canvas.height / 2;
+    function draw() {
+        ctx.translate(x, y); // 移动画布基准点到正中心
+        ctx.save(); // 保存之前的绘画状态 为了不影响下面的绘画
+        // @1 画一个圆盘
+        ctx.beginPath();
+        ctx.arc(0, 0, 200, 0, Math.PI * 2); // 现在圆心在画布正中心 上面已设置画布基准点到正中心
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.restore(); // 保存状态
+        ctx.save();
+        // @2 画小时点 数组以3开始 因为画圆以角度为0开始画
+        let hourNumber = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];
+        ctx.font = "18px Arial"; // 设置字体样式
+        ctx.textAlign = "center"; // 左右居中
+        ctx.textBaseline = "middle"; // 上下居中
+        hourNumber.forEach((item, index) => {
+            let rad = ((Math.PI * 2) / 12) * index; // 每个小时占的弧度
+            let x = Math.cos(rad) * 160,
+                y = Math.sin(rad) * 160;
+            ctx.fillText(item, x, y); //填充文字，位置
+        });
+        // @3 画分钟点 大黑点 和 小黑点
+        for (let i = 0; i < 60; i++) {
+            ctx.beginPath();
+            let rad = ((Math.PI * 2) / 60) * i;
+            let x = Math.cos(rad) * 180,
+                y = Math.sin(rad) * 180;
+            if (i % 5 == 0) {
+                // 小时的大黑点
+                ctx.fillStyle = "#000";
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+            } else {
+                //分钟的小黑点
+                ctx.fillStyle = "#666";
+                ctx.arc(x, y, 2, 0, Math.PI * 2);
+            }
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+    // 绘制小时指针
+    function drawHour(h, m) {
+        // 时针的指向跟小时和分钟有关系
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        let rad = ((Math.PI * 2) / 12) * (h + m / 60); // 当前是多少个小时 转多少度
+        ctx.rotate(rad); // 旋转
+        ctx.moveTo(0, 20); // 不写0，0 是为了突出小黑点一部分
+        ctx.lineTo(0, -120);
+        ctx.stroke(); // 开始描边
+        ctx.restore();
+    }
+    // 绘制分钟指针
+    function drawMinute(m) {
+        ctx.save();
+        ctx.beginPath();
+        let rad = ((Math.PI * 2) / 60) * m; // 分针转的角度
+        ctx.rotate(rad); // 旋转
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "red";
+        ctx.moveTo(0, 20);
+        ctx.lineTo(0, -140);
+        ctx.stroke(); // 开始描边
+        ctx.restore();
+    }
+    // 绘制秒指针
+    function drawSecond(s) {
+        ctx.save();
+        ctx.beginPath();
+        let rad = ((Math.PI * 2) / 60) * s; // 秒针转的角度
+        ctx.rotate(rad); // 旋转
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "blue";
+        ctx.moveTo(0, 20);
+        ctx.lineTo(0, -160);
+        ctx.stroke(); // 开始描边
+        ctx.restore();
+    }
+    function middleDote() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(0, 0, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+    let date = new Date(),
+        h = date.getHours(),
+        m = date.getMinutes(),
+        s = date.getSeconds();
+
+    draw();
+    drawHour(h, m);
+    drawMinute(m);
+    drawSecond(s);
+    middleDote();
+    let timer = function(){}
+</script>

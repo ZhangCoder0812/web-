@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            canvas {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </body>
+</html>
+
+<script>
+    let canvas = document.querySelector("#canvas");
+    let ctx = canvas.getContext("2d");
+    let x = canvas.width / 2,
+        y = canvas.height / 2;
+    function draw() {
+        ctx.translate(x, y); // 移动画布基准点到正中心
+        ctx.save(); // 保存之前的绘画状态 为了不影响下面的绘画
+        // @1 画一个圆盘
+        ctx.beginPath();
+        ctx.arc(0, 0, 200, 0, Math.PI * 2); // 现在圆心在画布正中心 上面已设置画布基准点到正中心
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.restore(); // 保存状态
+        ctx.save(); 
+         // @1 画一个圆盘
+    }
+    draw();
+</script>

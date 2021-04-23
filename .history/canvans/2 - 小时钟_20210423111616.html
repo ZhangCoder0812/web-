@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            canvas {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </body>
+</html>
+
+<script>
+    let canvas = document.querySelector("#canvas");
+    let ctx = canvas.getContext("2d");
+    let x = canvas.width / 2,
+        y = canvas.height / 2;
+    function draw() {
+        ctx.translate(x, y); // 移动画布基准点到正中心
+        ctx.save(); // 保存之前的绘画状态 为了不影响下面的绘画
+        // @1 画一个圆盘
+        ctx.beginPath();
+        ctx.arc(0, 0, 200, 0, Math.PI * 2); // 现在圆心在画布正中心 上面已设置画布基准点到正中心
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        ctx.restore(); // 保存状态
+        ctx.save();
+        // @2 画小时点 数组以3开始 因为画圆以角度为0开始画
+        let hourNumber = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];
+        ctx.font = "18px Arial"; // 设置字体样式
+        ctx.textAlign = "center"; // 左右居中
+        ctx.textBaseAlign = "middle"; // 上下居中
+        hourNumber.forEach((item, index) => {
+            let rad = ((Math.PI * 2) / 12) * index; // 每个小时占的弧度
+            let x = Math.cos(rad) * 160,
+                y = Math.sin(rad) * 160;
+            ctx.fillText(item, x, y); //填充文字，位置
+        });
+        // @3 画分钟点
+        for (let i = 0; i < 60; i++) {
+            ctex.beginPath();
+            ctx.arc()
+        }
+    }
+    draw();
+</script>

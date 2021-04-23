@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- 
+         canvas 本身就是个标签，画布。若浏览器不支持canvas 会被渲染出一个文本。
+         默认宽高 300 * 150
+
+       -->
+        <canvas id="canvans" width="600" height="400">您的浏览爱情不支持canvas，请升级</canvas>
+    </body>
+</html>
+<!-- script写在html外面也可以 最终也会加在body里  -->
+<script>
+    let canvans = document.querySelector("#canvans");
+    // 创造一个绘画环境
+    let ctx = canvans.getContext("2d");
+
+    // @1 画矩形 fill 填充
+    // ctx.fillStyle = "red"; // 设置填充色 并未开始填充 不设置默认黑色
+    // ctx.fillRect(0, 0, 400, 100); //填充矩形 前两个起始坐标，后两个结束位置(宽，高)
+
+    // @2 画线 stroke 描边
+    // ctx.strokeStyle = "red"; // 线的颜色
+    // ctx.strokeRect(10, 10, 400, 100); // 无填充色矩形
+
+    // @3 创建一个矩形 rect 无填充色 并没有放到画布上 将strokeRect分开写
+    // ctx.rect(10, 10, 400, 100); // 创建一个矩形
+    // ctx.strokeStyle = "red";
+    // ctx.stroke(); // 把矩形画上去
+
+    // @4 创建一个矩形 rect 有填充色
+    //ctx.rect(10, 10, 400, 100); // 创建一个矩形
+    //ctx.fillStyle = "red";
+    //ctx.fill(); // 把矩形画上去
+
+    ctx.beginPath(); // 抬笔了 不接着上次的位置画
+    ctx.moveTo(10, 20); // 把笔抬起来放到一个新的位置
+    ctx.lineTo(100,100) // 画到100,100 的位置
+</script>
