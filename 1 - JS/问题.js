@@ -45,6 +45,8 @@
 
  html中pre和code标签
 
+ canvas 动画标签也变颜色了 连续点击动画卡死
+
  new Promise((resolve) => {
   console.log("promise1");
   resolve();
