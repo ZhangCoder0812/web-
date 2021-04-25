@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: rgb(48, 49, 51);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>
+
+<script>
+  let utils = {
+    random(min, max) {
+      return Math.random() * (max - min) + min;
+    },
+  };
+  class Effect {
+    constructor(option) {
+      let { id = "canvas" } = option;
+      this.canvas = document.getElementById(id);
+      this.ctx = this.canvas.getContext("2d");
+      this.dos = []; // 存储粒子
+      this.config = {
+        count: 100,
+        max_length: 100, // 两个点之间最大距离 超过就不连线类
+        // 放置类子的配置项
+        r: 2,
+        color: "rgba(255,255,255,0.8)",
+        xv_range: [-2, 2], // x轴移动速度 负表示反向
+        yv_range: [-2, 2],
+        scale_range: [0.5, 1.5], // 缩放范围
+        ...option,
+      };
+      // 记录鼠标位置
+      this.mouse = {
+        x: 0,
+        y: 0,
+      };
+      this.isIn = false;
+      this.init();
+    }
+    init() {
+      this.setSize();
+      this.product(this.config.count);
+      this.draw();
+      this.canvas.addEventListener("mousemove", this.mousemove.bind(this));
+      this.canvas.addEventListener("mouseover", () => (this.isIn = true));
+      this.canvas.addEventListener("mouseout", () => (this.isIn = false));
+    }
+    mousemove(e) {
+      this.mouse.x = e.pageX;
+      this.mouse.y = e.pageY;
+    }
+    // 画鼠标点
+    drawMouseDot() {
+      let dot = new Dot({
+        x: this.mouse.x,
+        y: this.mouse.y,
+        xv: 0,
+        yv: 0,
+        color: this.config.color,
+        scale: 1,
+        r: 2,
+      });
+      dot.draw(this.ctx);
+      // 画鼠标点和其他点的连线
+      for (let i = 0; i < this.dos.length; i++) {
+        // 两个点之间距离 = (x轴平方+y轴平方) 再开平方。勾股定理
+        let distance = Math.sqrt(
+          Math.pow(this.dos[i].x - this.mouse.x, 2) +
+            Math.pow(this.dos[i].y - this.mouse.y, 2)
+        );
+        if (distance < this.config.max_length) {
+          this.ctx.strokeStyle = this.config.color.replace(
+            /,(\d\.*\d*)\)/,
+            (a, b) => {
+              return "," + b * (1 - distance / this.config.max_length) + ")";
+            } // 'rgba(255,255,255,0.8*xxx)'
+          );
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.dos[i].x, this.dos[i].y);
+          this.ctx.lineTo(this.mouse.x, this.mouse.y);
+          this.ctx.closePath();
+          this.ctx.stroke();
+        }
+      }
+    }
+    // 设置canvas的宽高
+    setSize() {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+    }
+    //创造粒子
+    product(count = 100) {
+      while (count--) {
+        let dot = new Dot({
+          // 坐标点随机产生 不能是半个球 所以最小为r 最大为画布宽度减r
+          x: utils.random(this.config.r, window.innerWidth - this.config.r),
+          y: utils.random(this.config.r, window.innerHeight - this.config.r),
+          color: this.config.color,
+          r: this.config.r,
+          xv: utils.random(this.config.xv_range[0], this.config.xv_range[1]),
+          yv: utils.random(this.config.yv_range[0], this.config.yv_range[1]),
+          scale: utils.random(
+            this.config.scale_range[0],
+            this.config.scale_range[1]
+          ),
+        });
+        this.dos.push(dot);
+      }
+    }
+    // 把粒子画到画布上
+    draw() {
+      // 画粒子
+      this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      this.dos.forEach((item) => {
+        item.draw(this.ctx);
+      });
+      // 画粒子之间的连线 超过一定距离就不再连接 使用双循环 拿当前的点和所有的点比较
+      for (let i = 0; i < this.dos.length; i++) {
+        for (let j = 0; j < this.dos.length; j++) {
+          // 两个点之间距离 = (x轴平方+y轴平方) 再开平方。勾股定理
+          let distance = Math.sqrt(
+            Math.pow(this.dos[i].x - this.dos[j].x, 2) +
+              Math.pow(this.dos[i].y - this.dos[j].y, 2)
+          );
+          if (distance < this.config.max_length) {
+            this.ctx.strokeStyle = this.config.color.replace(
+              /,(\d\.*\d*)\)/,
+              (a, b) => {
+                return "," + b * (1 - distance / this.config.max_length) + ")";
+              } // 'rgba(255,255,255,0.8*xxx)'
+            );
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.dos[i].x, this.dos[i].y);
+            this.ctx.lineTo(this.dos[j].x, this.dos[j].y);
+            this.ctx.closePath();
+            this.ctx.stroke();
+          }
+        }
+      }
+      // requestAnimationFrame => setTimeout 回调函数会在上一贞渲染完成之后自动触发
+      // 这里 draw 调了 move ，move里调了draw 死递归。requestAnimationFrame解决了这个问题
+      requestAnimationFrame(this.move.bind(this));
+      if (this.isIn) {
+        this.drawMouseDot();
+      }
+    }
+    // 粒子移动 即改变粒子的坐标
+    move() {
+      this.dos.forEach((item) => {
+        item.x += item.xv;
+        item.y += item.yv;
+        // 边界判断
+        if (item.x < item.r || item.x > window.innerWidth - item.r) {
+          item.xv *= -1;
+        }
+        if (item.y < item.r || item.y > window.innerHeight - item.r) {
+          item.yv *= -1;
+        }
+      });
+      // 粒子位置跟新完成后重新绘画
+      this.draw();
+    }
+  }
+  // 专门用来生产粒子 粒子要有 大小，位置，速度，缩放比例
+  class Dot {
+    constructor(option) {
+      this.x = option.x; // 横坐标
+      this.y = option.y; // 纵坐标
+      this.xv = option.xv; // x轴移动速度
+      this.yv = option.yv; // y轴移动速度
+      this.color = option.color; // 颜色
+      this.r = option.r; // 半径
+      this.scale = option.scale; // 缩放比例
+    }
+    draw(ctx) {
+      // ctx 传进来的绘画环境
+      ctx.beginPath();
+      ctx.fillStyle = this.color; // 背景色
+      ctx.strokeStyle = this.color; // 边框色
+      // 圆心坐标， 半径 ，从0～2PI 整圆
+      ctx.arc(this.x, this.y, this.r * this.scale, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  new Effect({ count: 150 });
+</script>

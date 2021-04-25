@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./three.js"></script>
+  </body>
+</html>
+
+<script>
+  //------ @1 创建环境 --------
+  // 创建一个场景 类似于拍电影需要布置一个景
+  var scene = new THREE.Scene();
+  // 创建一个相机/视角/眼睛👀  (视角/往上看多少 往下看多少，横纵比/视角比/电视大小 宽高比，最近看多少像素，最远看多少像素) PerspectiveCamera 透视相机
+  var camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  //创造一个渲染器 在哪里看 创造出来的就是一个canvas
+  var renderer = new THREE.WebGLRenderer();
+  //设置一个渲染器的尺寸 要渲染多大的地方
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  //将renderer的dom元素添加到我们的HTML文档中。这就是渲染器用来显示场景给我们看的<canvas>元素。
+  document.body.appendChild(renderer.domElement);
+
+  //------ @2 创建物体 --------
+  // 创造一个几何体 (长，宽，高)，只是一个铁架子，几何体有很多，这里只是用了一个立方体
+  var geometry = new THREE.BoxGeometry(1, 1, 1);
+  // 这个几何体用的什么材料 就是说这个几何体用的什么样式 MeshBasicMaterial基本材料 每一个面都一样
+  var material = new THREE.MeshBasicMaterial({ color: "red" });
+  // 把铁架子和材料合起来 得到一个几何物体 这才是我们要去渲染的
+  var cube = new THREE.Mesh(geometry, material);
+  // 把这个创造好的物体放入场景中
+  scene.add(cube);
+
+  //------ @3 渲染 --------
+  // 给相机设置个位置 scene.add()的时候，物体将会被添加到(0,0,0)坐标。
+  // 会使得相机和物体重叠，看不到效果。为了防止这种情况的发生，我们只需要将摄像机稍微向外移动一些即可
+  camera.position.z = 5;
+  // 渲染器执行 把场景和相机传进去
+  renderer.render(scene, camera);
+
+  //------ @4 让其转起来 --------
+  function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+  animate();
+</script>
