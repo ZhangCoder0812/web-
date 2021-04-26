@@ -12,7 +12,6 @@ const htmlWebpackPlugin = require("html-webpack-plugin"); // 自动在html中引
 
 module.exports = {
     mode: "development", // 打包方式 production生产环境 development开发环境
-    devtool: "source-map", // 代码调试 有很多选项 source-map可以详细指出错误在哪 但是打包速度慢
     entry: "./src/index.js", //入口文件
     // 出口
     output: {
