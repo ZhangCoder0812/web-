@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .blue {
+                fill: blue;
+                stroke: red;
+                stroke-width: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- svg 默认宽高 300 * 150 -->
+        <svg>
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <svg width="100%" height="100%">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <!-- 
+        viewBox 前两个是左上角的坐标 后两个是视口的宽高
+        相当于切出一部分 只展示svg的一部分
+        前两个暂时用不到，个人理解除非要对内部svg做整体位移，否则一般都是0 0，
+     -->
+        <svg width="100" height="100" viewBox="0 0 50 50 ">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+
+        <svg width="200" height="200" viewBox="0 0 50 50 " style="border: 1px solid black">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+
+        <svg width="200" height="200" style="border: 1px solid black">
+            <circle cx="50" cy="50" r="50" class="blue"></circle>
+        </svg>
+
+        <!--  path绘制路径 M起点坐标 moveTo ，L后续坐标 lineTo，z闭合路径 -->
+        <svg width="600" height="600">
+            <path
+                d="M 50,50 L 100,60 L 200,160 L 250,300 L 450,450 z"
+                stroke="red"
+                fill="none"
+            ></path>
+        </svg>
+
+        <svg width="200" height="200">
+            <text x="30" y="30">wade</text>
+        </svg>
+
+        <svg
+            data-v-a04682de=""
+            version="1.1"
+            viewBox="0 0 122 38"
+            style="width: 122px; height: 38px;"
+        >
+            <linearGradient
+                data-v-a04682de=""
+                id="styleTR"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop data-v-a04682de="" offset="0%" style="stop-color: rgb(65, 109, 229);"></stop>
+                <stop
+                    data-v-a04682de=""
+                    offset="100%"
+                    style="stop-color: rgb(247, 162, 25);"
+                ></stop>
+            </linearGradient>
+            <path
+                data-v-a04682de=""
+                fill="none"
+                d="M 2 2 L 2 21 q 2 16 18 16 M 18 37 L 122 37"
+                stroke="url(#styleTR)"
+                stroke-width="2"
+                stroke-dasharray="0"
+                stroke-linecap="round"
+                class=""
+            ></path>
+        </svg>
+    </body>
+</html>

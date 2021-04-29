@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+  </body>
+</html>
+
+<script>
+  class BarChart {
+    constructor(id) {
+      this.canvas = document.getElementById(id);
+      this.ctx = this.canvas.getContext("2d");
+      this.setRadio(); // 根据设备像素比 提高清晰度 放在获取值的上面执行
+      this.cPadding = 80; //内边距
+      this.yAxisH = this.canvas.height - this.cPadding * 2; // y轴高度
+      this.xAxisW = this.canvas.width - this.cPadding * 2; // x轴宽度
+      this.originX = this.cPadding; // 圆点/0点横坐标
+      this.originY = this.cPadding + this.yAxisH; // 圆点/0点纵坐标
+      this.yAxisNum = 10; // y轴分多少端
+      this.xAxisNum = 0; // x轴分多少端
+      this.data = [];
+    }
+    init() {
+      this.ctx.font = "20px Arial";
+      this.drawAxis();
+    }
+    setData(ary) {
+      this.data = ary;
+      this.xAxisNum = ary.length;
+      this.init();
+    }
+    setRadio() {
+      // 根据设备像素比 提高清晰度
+      // 可能屏幕分辨率高 canvas分辨率不高 要把canvas放大再同通过css缩小到原始宽高
+      let device = window.devicePixelRatio || 1; // 设备像素比
+      let canDevice = this.ctx.backingStorePixelRatio || 1; // canvas像素比
+      let ratio = device / canDevice;
+      let oldW = this.canvas.width,
+        oldH = this.canvas.height;
+      this.canvas.width = oldW * ratio;
+      this.canvas.height = oldH * ratio;
+      // 以上步骤会将canvas放大 所以要将canvas宽高再还回去
+      this.canvas.style.width = oldW + "px";
+    }
+    // 画线
+    drawLine(x, y, x2, y2) {
+      // x,y起始坐标，x2,y2终点坐标
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 1;
+      this.ctx.moveTo(x, y);
+      this.ctx.lineTo(x2, y2);
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
+    // 画一个坐标系
+    drawAxis() {
+      // 把canvas的坐标原点设置到0.5 0.5 的位置 必须是.5，1不行
+      // 用于解决线模糊的问题 但要再挪回来。这是一个技巧
+      this.ctx.translate(0.5, 0.5);
+
+      this.ctx.strokeStyle = "#333";
+      // 画y轴
+      this.drawLine(this.originX, this.originY, this.originX, this.cPadding);
+      // 画x轴
+      this.drawLine(
+        this.originX,
+        this.originY,
+        this.canvas.width - this.cPadding,
+        this.originY
+      );
+      // 画刻度
+      this.drawMarker();
+      this.ctx.translate(-0.5, -0.5);
+    }
+    // 画刻度
+    drawMarker() {
+      // 画y轴刻度
+      let oneYVal = this.yAxisH / this.yAxisNum;
+      this.ctx.textAlign = "right";
+      for (let i = 0; i <= this.yAxisNum; i++) {
+        // 画刻度对应值大小 (文字,横坐标，纵坐标)
+        this.ctx.fillText(
+          i * 100,
+          this.originX - 10,
+          this.originY - oneYVal * i + 5
+        );
+        // 画 -
+        if (i > 0) {
+          this.ctx.strokeStyle = "#333";
+          this.drawLine(
+            this.originX,
+            this.originY - oneYVal * i,
+            this.originX - 5,
+            this.originY - oneYVal * i
+          );
+          // 画y轴辅助线
+          this.ctx.strokeStyle = "#eee";
+          this.drawLine(
+            this.originX,
+            this.originY - oneYVal * i,
+            this.xAxisW,
+            this.originY - oneYVal * i
+          );
+        }
+      }
+      //y轴title， save 和 restore 之前代码不影响其他地方 因为用到了rotate， rotate让整个画布旋转
+      this.ctx.save();
+      this.ctx.font = "30px Arial";
+      this.ctx.rotate(-Math.PI / 2); // 必须先旋转再填文字
+      // 因为旋转了 所以横纵坐标要反过来
+      this.ctx.fillText("产量", -this.yAxisH / 2, 20);
+      this.ctx.restore();
+      // --------------------------------
+      // 画x轴刻度
+      let oneXVal = this.xAxisW / this.xAxisNum;
+      this.ctx.strokeStyle = "#333";
+      this.ctx.textAlign = "center";
+      for (let i = 0; i < this.xAxisNum; i++) {
+        this.ctx.fillText(
+          this.data[i][0],
+          this.originX + oneXVal * (i + 1) - oneXVal / 2, // 移到正中间
+          this.originY + 20
+        );
+        this.drawLine(
+          this.originX + oneXVal * (i + 1),
+          this.originY,
+          this.originX + oneXVal * (i + 1),
+          this.originY + 5
+        );
+      }
+      this.ctx.font = "30px Arial";
+      this.ctx.fillText("日期", this.xAxisW / 2, this.originY + 50);
+    }
+  }
+
+  let bar = new BarChart("canvas");
+  let data = [
+    [2007, 750],
+    [2008, 425],
+    [2009, 900],
+    [2010, 500],
+    [2011, 200],
+    [2012, 600],
+    [2013, 350],
+  ];
+  bar.setData(data);
+</script>

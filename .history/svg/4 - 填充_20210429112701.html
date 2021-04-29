@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <svg width="500" height="500" style="border:1px solid black">
+            <rect x="0" y="0" width="100" height="50" fill="orange">
+                <!-- 
+                    attributeName 需要动画的属性
+                     from 从哪里开始
+                     to 到哪里结束
+                     dur 动画时长
+                     repeatCount 重复次数 1,2 indefinite
+                 -->
+                <animate
+                    attributeName="x"
+                    from="0"
+                    to="500"
+                    dur="2s"
+                    repeatCount="indefinite"
+                ></animate>
+                <animate
+                    attributeName="y"
+                    from="0"
+                    to="500"
+                    dur="2s"
+                    repeatCount="indefinite"
+                ></animate>
+                <animate
+                    attributeName="fill"
+                    from="orange"
+                    to="blue"
+                    dur="2s"
+                    repeatCount="indefinite"
+                ></animate>
+            </rect>
+        </svg>
+
+        <!-- animate 标签对css的 transform不起作用，
+            需要变形 请使用animateTransform标签 -->
+        <svg width="500" height="500" style="border:1px solid black">
+            <rect x="250" y="250" width="50" height="50" fill="orange">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    begin="0s"
+                    dur="10s"
+                    from="0 200 200" 
+                    to="360 400 400"
+                    repeatCount="indefinite"
+                ></animateTransform>
+            </rect>
+        </svg>
+    </body>
+</html>

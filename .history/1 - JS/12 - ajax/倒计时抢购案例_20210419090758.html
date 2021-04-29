@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #box {
+        width: 500px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        letter-spacing: 3px;
+        margin: 0 auto;
+        background: red;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+    <!-- 
+        - 时间不能使用 new Date() 获取，因为 new Date() 获取的是客户端时间，
+          用户可以随意修改
+        - 从服务器获取的时间会有时间差「这个不可避免 我们应尽量减少」  
+        - 使用head请求 从响应头获取时间 减少时间差
+     -->
+    <script>
+      let target = new Date("2021/04/18 12:00:00"),
+        now = null,
+        timer = null;
+      function start(callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("HEAD", "./data.json", true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 2 && xhr.status == 200) {
+            now = new Date(xhr.getResponseHeader("Date"));
+            callback && callback();
+          }
+        };
+        xhr.send(null);
+      }
+      function computedTime() {
+        let spanTime = target - now;
+
+        if (spanTime <= 0) {
+          // 结束定时器
+          clearInterval(timer);
+          timer = null;
+          box.innerHTML = "开抢";
+          return;
+        }
+        let hours = Math.floor(spanTime / (60 * 60 * 1000));
+        spanTime -= hours * 60 * 60 * 1000;
+        let minutes = Math.floor(spanTime / (60 * 1000));
+        spanTime -= minutes * 60 * 1000;
+        let seconds = Math.floor(spanTime / 1000);
+        box.innerHTML = `距离开抢还剩：${hours < 10 ? "0" + hours : hours}:${
+          minutes < 10 ? "0" + minutes : minutes
+        }:${seconds < 10 ? "0" + seconds : seconds}`;
+        /* 
+          第一次计算完 让now在原来基础上加一秒「时间在往后走」，第一次获取到服务器时间 后期基于
+          这个时间自己加即可 不需要每次都重新获取服务器时间，减少时间差
+        */
+        now = new Date(now.getTime() + 1000);
+      }
+      // 开启倒计时
+      start(() => {
+        computedTime();
+        timer = setInterval(() => computedTime(), 1000);
+      });
+    </script>
+  </body>
+</html>

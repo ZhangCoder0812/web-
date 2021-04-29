@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .blue {
+                fill: blue;
+                stroke: red;
+                stroke-width: 3px;
+            }
+            .text {
+                color: black; /* 没效果 颜色不在用color  用fill */
+                fill: blue;
+                font-size: 50px;
+                font-weight: 900;
+                stroke: red;
+                stroke-width: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- svg 默认宽高 300 * 150 -->
+        <svg>
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <svg width="100%" height="100%">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+        <!-- 
+        viewBox 前两个是左上角的坐标 后两个是视口的宽高
+        相当于切出一部分 只展示svg的一部分
+        前两个暂时用不到，个人理解除非要对内部svg做整体位移，否则一般都是0 0，
+     -->
+        <svg width="100" height="100" viewBox="0 0 50 50 ">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+
+        <svg width="200" height="200" viewBox="0 0 50 50 " style="border: 1px solid black">
+            <circle cx="50" cy="50" r="50" fill="red"></circle>
+        </svg>
+
+        <svg width="200" height="200" style="border: 1px solid black">
+            <circle cx="50" cy="50" r="50" class="blue"></circle>
+        </svg>
+
+        <!--  ellipse 椭圆  cx cy 圆心  rx -->
+        <svg width="200" height="200">
+            <ellipse cx="60" cy="60" rx="20" ry="50"></ellipse>
+        </svg>
+
+        <!--  path绘制路径 M起点坐标 moveTo ，L后续坐标 lineTo，z闭合路径 -->
+        <svg width="600" height="600">
+            <path
+                d="M 50,50 L 100,60 L 200,160 L 250,300 L 450,450 z"
+                stroke="red"
+                fill="none"
+            ></path>
+        </svg>
+
+        <svg width="200" height="200">
+            <text x="30" y="30" class="text">wade</text>
+        </svg>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <svg width="600" height="600" style="border:1px solid black">
+            <circle
+                id="c1"
+                cx="200"
+                cy="200"
+                r="100"
+                stroke="orange"
+                fill="red"
+                stroke-width="10"
+            ></circle>
+
+            <!-- use标签复用节点 通过id标识 x,y坐标  -->
+            <use href="#c1" x="0" y="200"></use>
+        </svg>
+    </body>
+</html>
