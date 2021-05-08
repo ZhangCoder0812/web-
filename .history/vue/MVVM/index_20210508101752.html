@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="name" />
+            <h1>{{name}}</h1>
+        </div>
+    </body>
+</html>
+
+<script>
+    function defineReactive(target, key, val) {
+        // 每一个属性都有自己的订阅器
+        let dep = new Dep();
+        Object.defineProperty(target, key, {
+            enumerable: true,
+            get() {
+                // 这个加个判断 是因为能触发get的方式有很多 某些方法/控制台直接获取属性...
+                // 只有是watcher类型的才往事件池里放 模版编译的时候加入的 即模板中使用的属性才会
+                if (Dep.target) {
+                    // 在该属性的事件池中放入订阅者(观察的人)
+                    dep.addSub(Dep.target);
+                }
+                return val;
+            },
+            set(newVal) {
+                if (newVal !== val) {
+                    val = newVal;
+                    dep.notify();
+                }
+            },
+        });
+    }
+
+    function observe(data) {
+        if ({}.toString.call(data) !== "[object Object]") return;
+        let keys = Object.keys(data);
+        keys.forEach(key => {
+            defineReactive(data, key, data[key]);
+        });
+    }
+
+    function compile(node, vm) {
+        // 编译node节点 判断节点类型： 文本节点 nodeType=3 / 元素节点 nodeType=1
+        // 文本节点直接进行替换 ，元素节点要考虑行内属性(v-开头)和子节点
+        if (node.nodeType == 1) {
+            // 考虑行内属性
+            let attrs = node.attributes; // 获取所有的行内属性
+            [...attrs].forEach(item => {
+                console.dir(item);
+                // 拿到v-开头的属性 这里只考虑model
+                if (/^v-/.test(item.nodeName)) {
+                    let vName = item.nodeValue; // 应的变量 这里是name
+                    let val = vm.$data[vName]; // 在实例的data上获取该变量对应的值
+                    new Watcher(node, vName, vm); // 监听的节点 属性
+                    node.value = val; // 这里的node是input 给input赋值
+                    // 实现直接在文本框输入 数据跟着变化
+                    node.addEventListener("input", e => {
+                        vm.$data[vName] = e.target.value;
+                    });
+                }
+            });
+            // 考虑子节点 递归编译
+            [...node.childNodes].forEach(item => {
+                compile(item, vm);
+            });
+        } else {
+            // 文本节点 获取对应的文本字符串 将{{}}转为真实的值
+            let str = node.textContent; // "{{name}}"
+            let reg = /\{\{(\w+)\}\}/; // 匹配{{}}语法
+            if (reg.test(str)) {
+                str = str.replace(reg, (a, b) => {
+                    // a->"{{name}}" b->name
+                    new Watcher(node, b, vm);
+                    return vm.$data[b];
+                });
+                node.textContent = str;
+            }
+        }
+    }
+
+    function nodeToFragment(el, vm) {
+        // 把dom节点放入文档碎片中 编译vue语法 操作文档碎片性能高
+        let fragment = document.createDocumentFragment();
+        let child; // 每一个节点 每一个节点都要编译
+        while ((child = el.firstChild)) {
+            compile(child, vm);
+            fragment.appendChild(child);
+        }
+        // 在把文档碎片插入到dom中
+        el.appendChild(fragment);
+    }
+
+    // 发布订阅 用于v-model的联动效果
+    class Dep {
+        constructor() {
+            this.subs = [];
+        }
+        addSub(fn) {
+            this.subs.push(fn);
+        }
+        notify() {
+            // fn 都是一些watcher实例
+            this.subs.forEach(sub => sub.update());
+        }
+    }
+
+    // 创造一个订阅者(观察的人) 去观察每一个用到的属性
+    class Watcher {
+        constructor(node, key, vm) {
+            Dep.target = this; // this 就是 watcher 实例  模版编译时产生的
+            this.node = node;
+            this.key = key;
+            this.vm = vm;
+            this.getValue(); //会把当前的watcher实例放入对应的事件池中
+            Dep.target = null;
+        }
+        getValue() {
+            this.value = this.vm.$data[this.key]; // 会触发数据劫持的get方法
+        }
+        update() {
+            // 负责更新DOM
+            this.getValue(); // 获取新的value值
+            if (this.node.nodeType == 1) {
+                // 元素节点修改value值
+                this.node.value = this.value;
+            } else {
+                // 文本节点直接替换内容
+                this.node.textContent = this.value;
+            }
+        }
+    }
+
+    function Vue(option) {
+        this.$el = document.querySelector(option.el);
+        this.$data = option.data;
+        // 1. 劫持数据
+        observe(this.$data);
+        // 2. 模版编译 {{}} 语法
+        nodeToFragment(this.$el, this);
+    }
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            name: "wade",
+        },
+    });
+</script>
+
+<!-- 
+
+    vm Vue new出来的一个实例
+    $el 被挂载的元素 #app
+    $data vm.data
+
+
+
+ -->

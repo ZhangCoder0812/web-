@@ -1,0 +1,68 @@
+/* 
+ 
+
+2. v-for 和 v-if 为什么不能一起使用？
+        连用容易造成性能浪费 
+        vue2.x v-for优先级高
+        vue3   v-if优先级高
+
+3. 为什么使用异步组件？这里直指的是路由懒加载 。真正的异步组件？？？？
+        - 节省打包的体积，异步组件分开打包，采用jsonp的方式进行加载
+            有效解决文件过大问题
+        - 核心就是将使用import()引入组件  
+
+4. Vue抽离公共逻辑？
+      使用 Vue.mixin
+
+5. vue数据频繁变化为什么只更新一次？
+      异步跟新
+
+
+6. Object.defineProperty的缺陷？
+     - 每个属性都要遍历劫持
+     - 动态新增的属性劫持不了 $set可以解决
+       obj:{name:wade}
+       this.obj.age=12 检测不到变化
+       this.obj = {...this.obj,age:10} 可以检测到变化
+       this.$set(this.obj,age,10) 可以检测到变化
+     - 不适合劫持数组   
+
+7. watch的深度监听
+       obj:{name:wade}
+       this.obj.name='lbj' watch检测不到变化 因为对象的地址没有改变
+       this.obj = {...this.obj,name:lbj} 可以检测到变化 地址改变了
+       deep:true
+  
+8. Vue中组件生命周期调用顺序说一下
+   组件的调用顺序都是先父后子,渲染完成的顺序是先子后父。
+   组件的销毁操作是先父后子，销毁完成的顺序是先子后父       
+
+   加载渲染过程
+       父beforeCreate->父created->父beforeMount
+       ->子beforeCreate->子created->子beforeMount- >子mounted->父mounted
+
+    子组件更新过程
+       父beforeUpdate->子beforeUpdate->子updated->父updated
+  
+    父组件更新过程
+       父 beforeUpdate -> 父 updated
+ 
+    销毁过程
+       父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+
+ 
+9.  SSR了解吗
+
+   SSR也就是服务端渲染，也就是将Vue在客户端把标签渲染成HTML的工作放在服务端完成，
+   然后再把html直接返回给客户端。
+
+   SSR有着更好的SEO、并且首屏加载速度更快等优点。不过它也有一些缺点，比如我们的开发
+   条件会受到限制，服务器端渲染只支持beforeCreate和created两个钩子，当我们需要一些
+   外部扩展库时需要特殊处理，服务端渲染应用程序也需要处于Node.js的运行环境。还有就是
+   服务器会有更大的负载需求。
+
+   使用SSR若只是为了提高首屏加载速度也可以用懒加载 没必要使用SSR
+
+     
+
+*/
