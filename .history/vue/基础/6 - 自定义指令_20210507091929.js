@@ -1,0 +1,35 @@
+/* 
+
+
+
+*/自定义指令： 
+简写 bind+update 的集合
+Vue.directive('color',function(el,{value}){
+  el.style.color = value 
+})
+使用 v-color='red'
+
+全写
+Vue.directive('color',{
+  bind(el,{value}){
+     el.style.color = value 
+  },
+  insert(){},
+  update(el,{value}){
+     el.style.color = value 
+  },
+  componentUpdated(){},
+  unbind(){}
+})
+
+
+一般用于做按钮级别的权限校验
+Vue.directive('perssion',{
+  insert(el,{value}){
+     if(value<3){
+      el.parentNode.removeChild(el)
+    }
+  }
+})
+
+v-perssion=''4"
