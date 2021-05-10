@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .menu {
+                border: 1px solid #eee;
+                width: 150px;
+                padding: 10px;
+                position: absolute;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                padding: 5px 0;
+                border-bottom: 1px solid #eee;
+            }
+            li:hover {
+                background: lightblue;
+            }
+        </style>
+    </head>
+    <body></body>
+</html>
+<script>
+    window.oncontextmenu = function(e) {
+        e.preventDefault(); // 阻止右键默认行为
+        let menu = document.querySelector(".menu");
+        if (!menu) {
+            menu = document.createElement("div");
+            menu.className = "menu";
+            menu.innerHTML = `
+              <ul>
+                <li>菜单一</li>
+                <li>菜单二</li>
+              </ul>
+            `;
+            document.body.appendChild(menu);
+        }
+        // 菜单位置;
+        menu.style.left = `${e.clientX + 10}px`;
+        menu.style.top = `${e.clientY + 10}px`;
+    };
+
+    // 点击其他内容右键菜单消失(不包括菜单)
+    window.onclick = function(e) {
+        let target = e.target,
+            targetTag = target.tagName;
+        if (targetTag === "LI") {
+            target = target.parentNode;
+            targetTag = target.tagName;
+        }
+        if (targetTag == "UL" && target.parentNode.className == "menu") {
+            return;
+        }
+        // 
+        let menu = document.querySelector(".menu");
+        if (menu) {
+            document.body.removeChild(menu);
+        }
+    };
+</script>

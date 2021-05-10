@@ -35,7 +35,7 @@
         元素放入到要渲染的虚拟DOM列表中，若v-if='false' 则就不会放 页面也不会生成/看到DOM节点。
         v-show 无论是true还是false都会入到要渲染的虚拟DOM列表中，只是通过css控制显示与否。
         
-        v-if整个结构不加载 v-show结构加载通过css控制显示隐藏。
+        v-if整个解构不加载 v-show结构加载通过css控制显示隐藏。
 
 
   4. v-for 循环注意加key 自己可以加时间戳/随机数Math.random()

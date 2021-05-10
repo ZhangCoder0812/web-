@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body></body>
+</html>
+
+<script>
+    /* 
+    
+      什么是事件？
+        - 事件是浏览器赋予元素的默认行为，天生就有，无论我们是否为其绑定
+          方法，当某些行为触发的时候 相关的事件都会被触发执行
+
+      什么是事件绑定？
+        - 给元素默认的事件行为绑定方法，这样可以在行为触发的时候 执行这个
+          方法     
+
+      document.body.onclick = function() {};
+      常见说法：给body添加点击事件
+      标准说法：给body的点击事件行为绑定方法
+
+    */
+
+   /* 
+    
+     常见事件：
+       - 鼠标事件
+            click 点击事件
+                    + PC 无论点击还是双击 就是点击 频繁点击N次 触发N次) 
+                 单击事件
+                    + 移动端 300ms内没有发生第二次点击 算作点击事件 
+                      所以click在移动端有300ms延迟
+                    + 第一次点击完 需要等300ms 看看这段时间内是否触发了第二次，
+                      触发了就不是click点击行为了 属于双击
+            
+            dbclick 双击 
+                    + pc端只有点击和双击 没有单击
+                    + 移动端有click单击 dbclick双击 
+                           
+
+       - 键盘事件
+   
+   */
+</script>
