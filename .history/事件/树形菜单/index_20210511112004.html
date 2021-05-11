@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .container {
+                box-sizing: border-box;
+                margin: 20px auto;
+                padding: 10px;
+                width: 600px;
+                border: 1px dashed #aaa;
+                user-select: none;
+            }
+            .level {
+                display: none;
+                font-size: 14px;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                margin-left: 10px;
+            }
+            .level.level0 {
+                display: block;
+                margin-left: 0;
+            }
+            .level li {
+                position: relative;
+                padding-left: 15px;
+                line-height: 30px;
+            }
+            .level li .icon {
+                position: absolute;
+                left: 0;
+                top: 9px;
+                box-sizing: border-box;
+                width: 12px;
+                height: 12px;
+                line-height: 8px;
+                text-align: center;
+                border: 1px solid #aaa;
+                background: #eee;
+                cursor: pointer;
+            }
+            .level li .icon:after {
+                display: block;
+                content: "+";
+                font-size: 12px;
+                font-family: normal;
+            }
+            .level li .icon.open:after {
+                content: "-";
+            }
+            .level li .title {
+                color: #000;
+            }
+            a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <ul class="level level0">
+                <li>
+                    <a href="#" class="title">前端开发基础</a>
+                    <em class="icon open"></em>
+                    <ul class="level level1" style="display: block;">
+                        <li>
+                            <a href="#" class="title">HTML5核心知识</a>
+                        </li>
+                        <li>
+                            <a href="#" class="title">CSS3核心知识</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="title">前端开发核心</a>
+                    <em class="icon open"></em>
+                    <ul class="level level1" style="display: block;">
+                        <li>
+                            <a href="#" class="title">ES6 核心</a>
+                            <em class="icon open"></em>
+                            <ul class="level level2" style="display: block;">
+                                <li>
+                                    <a href="#" class="title">基础知识</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+s

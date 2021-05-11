@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style>
+            .magnifier {
+                margin: 20px auto;
+                width: 500px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+            .magnifier .abbre {
+                position: relative;
+                box-sizing: border-box;
+                width: 200px;
+                height: 200px;
+                border: 1px solid #eee;
+                box-sizing: border-box;
+            }
+            .magnifier .abbre img {
+                width: 100%;
+                height: 100%;
+            }
+            .magnifier .abbre .mark {
+                width: 80px;
+                height: 80px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                background-color: rgba(255, 0, 0, 0.4);
+                cursor: move;
+                display: none;
+            }
+            .magnifier .detail {
+                position: relative;
+                width: 300px;
+                height: 300px;
+                overflow: hidden;
+                display: none;
+                border: 1px solid #eee;
+                box-sizing: border-box;
+            }
+            .magnifier .detail img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="magnifier">
+            <!-- 缩略图 -->
+            <div class="abbre">
+                <img src="./images/small.jpg" alt="" />
+                <div class="mark"></div>
+            </div>
+            <!-- 详情图 -->
+            <div class="detail">
+                <img src="./images/big.jpg" alt="" />
+            </div>
+        </section>
+    </body>
+</html>
+<script>
+    $(function() {
+        let $magnifier = $(".magnifier"),
+            $abbre = $(".abbre"),
+            $mark = $(".mark"),
+            $detail = $(".detail");
+        $detailImg = $detail.find("img");
+
+
+        let abbreW = $abbre.width(),
+           abbreH = $abbre.height(),
+           markW = $mark.width(),
+           markH = $mark.height(),
+           detailW = $detail.width(),
+           detailH = $detail.height(),
+           detailIMGW = 0 ,
+           detailIMGH = 0 ;
+           
+
+        // $abbre.on("mouseenter", function(e) {
+        //     console.log(e);
+        // }); 下面快捷写法
+        $abbre
+            .mouseenter(function() {
+                $mark.css("display", "block");
+                $detail.css("display", "block");
+            })
+            .mousemove(function() {})
+            .mouseleave(function() {
+                $mark.css("display", "none");
+                $detail.css("display", "none");
+            });
+    });
+</script>
