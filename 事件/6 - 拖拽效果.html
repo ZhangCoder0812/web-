@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>珠峰培训</title>
+    <link rel="stylesheet" href="css/reset.min.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background: lightblue;
+        cursor: move;
+      }
+
+      #box h2 {
+        height: 30px;
+        background: green;
+        cursor: move;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box"></div>
+  </body>
+</html>
+<script>
+  // h5 中有drag方法 也能实现拖拽效果
+  // 解决鼠标焦点丢失问题 鼠标移动过快会脱离盒子 导致拖拽bug
+  // IE/火狐 ：把盒子和鼠标绑定在一起 setCaputure 绑定 / releaseCaputure 松绑
+  // 谷歌：把mousemove/mouseup 绑定给window 鼠标移动再快也离开不了浏览器
+  let box = document.querySelector("#box"),
+    HTML = document.documentElement,
+    minL = 0,
+    minT = 0,
+    maxL = HTML.clientWidth - box.offsetWidth,
+    maxT = HTML.clientHeight - box.offsetHeight;
+  // 鼠标按下
+  box.addEventListener("mousedown", function down(e) {
+    // 记录鼠标/盒子的开始位置
+    let { top, left } = this.getBoundingClientRect();
+    this.startT = top;
+    this.startL = left;
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    // this.setCaputure()
+    // this.addEventListener("mousemove", move);
+    // this.addEventListener("mouseup", up);
+    // 要保证 move/up 中的this还是盒子
+    this._move = move.bind(this);
+    this._up = up.bind(this);
+    window.addEventListener("mousemove", this._move);
+    window.addEventListener("mouseup", this._up);
+  });
+  // 鼠标按下时移动才触发
+  const move = function (e) {
+    let curL = e.clientX - this.startX + this.startL,
+      curT = e.clientY - this.startY + this.startT;
+    //边界判断
+    curL = curL < minL ? minL : curL > maxL ? maxL : curL;
+    curT = curT < minT ? minT : curT > maxT ? maxT : curT;
+    // 修改样式
+    this.style.left = `${curL}px`;
+    this.style.top = `${curT}px`;
+  };
+  // 鼠标抬起 拖拽结束
+  const up = function () {
+    window.removeEventListener("mousemove", this._move);
+    window.removeEventListener("mouseup", this._up);
+    // this.removeEventListener("mousemove", move);
+    // this.removeEventListener("mouseup", up);
+    // this.releaseCaputure()
+  };
+</script>
