@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 300px;
+        height: 300px;
+        background: lightblue;
+      }
+      .outer {
+        width: 200px;
+        height: 200px;
+        background: lightcoral;
+      }
+      .inner {
+        width: 100px;
+        height: 100px;
+        background: lightsalmon;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      box
+      <div class="outer">
+        outer
+        <div class="inner">innner</div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  /* 
+    事件传播机制：先捕获 再目标 再冒泡
+
+    层级结构：
+         window
+         document
+         html
+         body
+         box
+         outer
+         inner
+
+    点击inner：
+        1. 捕获阶段：(CAPTURING_PHASE)
+                   从上向下一层层查找，找到事件源inner。 
+                   目的是为冒泡阶段的传播提供路径
+                   e.path 存放的是捕获阶段收集的传播路径
+        2. 目标阶段：(AT_TARGET)
+                   触发事件源的相关事件行为 
+        3. 冒泡阶段：(BUBBLING_PHASE)
+                   从当前事件源inner往上冒泡，父级的相关事件
+                   行为也会被触发，如果做了事件绑定 那么对应方
+                   法就会执行。
+
+    DOM0级事件绑定的方法都是在 目标/冒泡阶段 触发
+    DOM2级事件绑定的方法可以控制在捕获阶段触发，没有实际意义。
+  */
+  let body = document.querySelector("body"),
+    box = document.querySelector(".box"),
+    outer = document.querySelector(".outer"),
+    inner = document.querySelector(".inner");
+  body.onclick = function (e) {
+    console.log("body");
+  };
+  box.onclick = function (e) {
+    console.log("box");
+  };
+  outer.onclick = function (e) {
+    console.log("outer");
+  };
+  inner.onclick = function (e) {
+    console.log("inner");
+    // e.stopPropagation(); // 组织事件冒泡传播
+    // e.cancelBubble = true; 兼容写法
+  };
+  body.addEventListener(
+    "click",
+    function () {
+      console.log("body 捕获");
+    },
+    true
+  );
+  body.addEventListener("click", function () {
+    console.log("body 冒泡");
+  });
+
+  // 利用事件传播机制实现点击哪个触发哪个方法
+  // 无论点击哪一个元素 最终都会冒泡传播到body上 根据事件源target/srcElement不同做不同处理
+  body.onclick = function (e) {
+    let target = e.target,
+      targetClass = target.className;
+    if (targetClass === "inner") {
+      console.log("----inner---");
+    }
+    if (targetClass === "outer") {
+      console.log("----outer----");
+    }
+    if (targetClass === "box") {
+      console.log("-----box----");
+    }
+  };
+  /* 
+   
+  上面的机制就是 ‘事件委托/代理’ ：利用事件冒泡传播机制(核心) 把一个容器中所有的子元素的事件行为
+                              委托给该容器的事件行为。
+  
+  好处：性能高 提升60%左右， 可以操作动态添加的元素
+  
+  */
+</script>

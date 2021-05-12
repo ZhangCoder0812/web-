@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .outer {
+        width: 200px;
+        height: 200px;
+        background: lightcoral;
+      }
+      .inner {
+        width: 100px;
+        height: 100px;
+        background: lightsalmon;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      outer
+      <div class="inner">innner</div>
+    </div>
+  </body>
+</html>
+
+<script>
+  /* 
+
+    mouseover 鼠标滑入
+    mouseout 鼠标滑出
+    mouseenter 鼠标进入
+    mouseleave 鼠标离开
+
+*/
+  let outer = document.querySelector(".outer"),
+    inner = document.querySelector(".inner");
+  //   outer.onmouseover = function () {
+  //     console.log("outer mouseover");
+  //   };
+  //   outer.onmouseout = function () {
+  //     console.log("outer onmouseout");
+  //   };
+  //   inner.onmouseover = function () {
+  //     console.log("inner mouseover");
+  //   };
+  //   inner.onmouseout = function () {
+  //     console.log("inner onmouseout");
+  //   };
+  // 由于冒泡传播机制 inner的mouse事件 也会触发outer的mouse方法
+  // 从 父元素 滑入 子元素 ，属于 滑出 父元素 滑入 子元素
+  // 从 子元素 滑入 父元素 ，属于 滑出 子元素 滑入 父元素
+  // mouseover/mouseout 看的是鼠标在谁身上 不看层级关系
+
+  outer.onmouseenter = function () {
+    console.log("outer mouseenter");
+  };
+  outer.onmouseleave = function () {
+    console.log("outer mouseleave");
+  };
+  inner.onmouseenter = function () {
+    console.log("inner mouseenter");
+  };
+  inner.onmouseleave = function () {
+    console.log("inner mouseleave");
+  };
+  // mouseenter/mouseleave 默认阻止了冒泡传播机制
+  // 是否触发看层级关系 在里面就不会触发leave
+</script>
