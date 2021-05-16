@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <button id="box1">box1</button>
+    <button id="box2">box2</button>
+  </body>
 </html>
 <script>
   /* 
@@ -16,4 +19,38 @@
               DOM2级事件，自定义事件池(容器)
     
     */
+
+  box1.onclick = function (e) {
+    console.log("DOM0 click", e);
+  };
+
+  box2.addEventListener("click", function (e) {
+    console.log("DOM2 click", e);
+  });
+
+  // 事件自动触发
+  box1.onclick(); // DOM0 级事件自动触发 但是事件对象e是undefined
+
+  // DOM2
+  let e = document.createEvent("MouseEvent"); // 创建一个事件
+  e.initEvent("click", true, true); // 初始化事件参数 事件类型/是否冒泡/是否取消
+  box2.dispatchEvent(e); // 手动触发
+
+  /* 
+    模拟事件触发：
+      1. 创建事件对象 createEvent： MouseEvent/KeyboardEvent/initEvent
+      2. 初始化事件参数：initMouseEvent/initKeyboardEvent/initEvent
+      3. 手动触发：dispatchEvent
+  */
+
+  // 创建自定义事件
+  let ev = document.createEvent("CustomEvent"); // CustomEvent 规定的
+  ev.initCustomEvent("xxx", true, true, {
+    clientX: 10,
+    clientY: 20,
+  });
+  box2.addEventListener("xxx", function (e) {
+    console.log("自定义事件", e);
+  });
+  box2.dispatchEvent(ev);
 </script>
