@@ -98,7 +98,7 @@
           + 同一事件绑定多个之前的会被覆盖，只会执行最后一个   
           + 执行效率快 使用起来方便   
 
- DOM2级事件绑定
+ DOM2级事件绑定（ 事件池的概念 将绑定的方法放入事件池中 一次执行 ）
      语法：xxx.addEventListener(事件,方法,[冒泡false/捕获true])
           document.body.addEventListener('click',function(){},false)
      移除：xxx.removeEventListener(事件,方法,[冒泡false/捕获true])
