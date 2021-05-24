@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2f3542;
+      }
+      h1 {
+        color: #fff;
+        font-size: 60px;
+        font-weight: bold;
+      }
+      span.mark {
+        border-right: 2px solid #fff;
+        animation: blink 0.6s step-end infinite; /* step-end 去除过渡效果 */
+      }
+      @keyframes blink {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>
+        <span
+          id="text"
+          data-text='["我是张宇","我是前端工程师","我爱篮球"]'
+        ></span>
+        <span class="mark"></span>
+      </h1>
+    </main>
+  </body>
+</html>
+<script>
+  const textEl = document.querySelector("#text");
+  const texts = JSON.parse(textEl.getAttribute("data-text"));
+  let index = 0; // 第几行文本 数组下标
+  let chartIndex = 0; // 每行文本第几个字符
+  let delta = 500; // 打印间隔时间
+  let start = null;
+  let isDeleting = false; // 在打印还是在删除
+  function type(time) {
+    /* requestAnimationFrame 每秒大约执行60次 跟cpu性能有关 */
+    window.requestAnimationFrame(type);
+    if (!start) start = time;
+    let progress = time - start;
+    // delta间隔之后开始打印
+    if (progress > delta) {
+      let text = texts[index];
+      if (!isDeleting) {
+        textEl.innerHTML = text.slice(0, ++chartIndex);
+        delta = 500 - Math.random() * 400; /* 模拟人工打字 延迟随机 */
+      } else {
+        textEl.innerHTML = text.slice(0, chartIndex--);
+      }
+      start = time;
+      // 当前行打印完毕 打印到最后一个字
+      if (chartIndex === text.length) {
+        isDeleting = true;
+        delta = 200; // 间隔改小一点 因为删除比打字快
+        start = time + 1200; // 当前行文本打印完之后 经过1200ms再删除
+      }
+      // 当前行删除完毕
+      if (chartIndex < 0) {
+        isDeleting = false;
+        start = time + 200; // 删除完之后 经过200ms开始打印
+        index = ++index % texts.length; // 打印下一行
+      }
+    }
+  }
+  window.requestAnimationFrame(type);
+</script>

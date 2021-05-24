@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        /* 需要隐藏最外层滚动条以使视差生效 */
+        overflow: hidden;
+      }
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 100vh;
+        /* 开启3D空间 数值越小 3D效果越大 */
+        perspective: 1px;
+        /* 在3D空间内进行 transform*/
+        transform-style: preserve-3d;
+      }
+      header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("../images/1.jpg");
+        background-size: 100% 100%;
+        /* 核心，按Z轴向远处移动1px  大小会缩小1倍  使用scale放大到原图大小 */
+        transform: translateZ(-1px) scale(2);
+      }
+      header h1 {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 100px 200px;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        background-color: #222f3e;
+      }
+      article {
+        max-width: 900px;
+        color: #fff;
+        font-size: 18px;
+        letter-spacing: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>页面视差滚动效果</h1>
+    </header>
+    <main>
+      <article>
+        <p>
+          季后赛新人布克全场砍下34分7篮板8助攻的全面数据，
+          不仅在内线长人如林的湖人内线翻江倒海，更是在保罗
+          不在的时刻扛起球队，作为当家球星的实力以及成色终
+          于在季后赛中得到验证。不过由于保罗的伤情，接下来
+          是否缺席还是未知数，德文-布克面对的挑战仍未结束
+        </p>
+        <p>
+          季后赛新人布克全场砍下34分7篮板8助攻的全面数据，
+          不仅在内线长人如林的湖人内线翻江倒海，更是在保罗
+          不在的时刻扛起球队，作为当家球星的实力以及成色终
+          于在季后赛中得到验证。不过由于保罗的伤情，接下来
+          是否缺席还是未知数，德文-布克面对的挑战仍未结束
+        </p>
+        <p>
+          季后赛新人布克全场砍下34分7篮板8助攻的全面数据，
+          不仅在内线长人如林的湖人内线翻江倒海，更是在保罗
+          不在的时刻扛起球队，作为当家球星的实力以及成色终
+          于在季后赛中得到验证。不过由于保罗的伤情，接下来
+          是否缺席还是未知数，德文-布克面对的挑战仍未结束
+        </p>
+        <p>
+          季后赛新人布克全场砍下34分7篮板8助攻的全面数据，
+          不仅在内线长人如林的湖人内线翻江倒海，更是在保罗
+          不在的时刻扛起球队，作为当家球星的实力以及成色终
+          于在季后赛中得到验证。不过由于保罗的伤情，接下来
+          是否缺席还是未知数，德文-布克面对的挑战仍未结束
+        </p>
+      </article>
+    </main>
+  </body>
+</html>
