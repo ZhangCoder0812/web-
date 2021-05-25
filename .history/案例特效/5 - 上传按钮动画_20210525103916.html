@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #222f3e;
+                height: 100vh;
+            }
+            .upload-button {
+                width: 180px;
+                height: 60px;
+                background-image: linear-gradient(160deg, #0093e9, #80d0c7);
+                border-radius: 8px;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 147, 233, 0.28);
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+            .checkmark {
+                opacity: 0;
+            }
+            .progress-bar {
+                position: absolute;
+                width: 50%;
+                height: 2px;
+                background-image: linear-gradient(45deg, #85ffbd, #fffb7d);
+                bottom: 0;
+                left: 0;
+                border-radius: 4px;
+            }
+            /* 上传时的动画 */
+            .upload-button.uploading .middle-line {
+                stroke-dasharray: 4 3; /* 每个线段长 ，间隔 */
+                animation: 0.8s linear dashLop infinite;
+            }
+            @keyframes dashLop {
+                from {
+                    stroke-dashoffset: 0; /* 从哪开始画 */
+                }
+                to {
+                    /* 是上面4,3的和 刚好运动到头 开始下一次动画 不是7的倍数的话会卡一下 */
+                    stroke-dashoffset: 7;
+                }
+            }
+            .upload-button.uploading .circle-wrap {
+                animation: 1.5s linear blink infinite;
+            }
+            @keyframes blink {
+                /* 值设置两个的话会有间断 一般设置三段 */
+                from {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            /* 完成时的动画 */
+            .upload-button.uploaded .arrow-up {
+                animation: 1.5s linear arrowTransform infinite;
+            }
+            @keyframes arrowTransform {
+                from{
+                    stroke-dashoffset: 100 00;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="upload-button uploaded">
+                <svg class="arrow" width="40" height="40" viewBox="0 0 40 40">
+                    <circle
+                        class="circle-wrap"
+                        cx="50%"
+                        cy="50%"
+                        r="19"
+                        fill="none"
+                        stroke="#fff"
+                        storke-width="2"
+                    ></circle>
+                    <polyline
+                        class="arrow-up"
+                        points="6,20 20,6 34,20"
+                        fill="none"
+                        stroke="#fff"
+                        storke-width="2"
+                    ></polyline>
+                    <line
+                        class="middle-line"
+                        x1="50%"
+                        y1="7"
+                        x2="50%"
+                        y2="34"
+                        stroke="#fff"
+                        storke-width="2"
+                    ></line>
+                    <polyline
+                        class="checkmark"
+                        points="8,20 18,30 30,12"
+                        fill="none"
+                        stroke="#fff"
+                        storke-width="2"
+                    ></polyline>
+                </svg>
+                <div class="progress-bar"></div>
+            </div>
+        </main>
+    </body>
+</html>
+<script></script>

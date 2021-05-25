@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                background-color: #cccccc;
+                margin: 0;
+                padding: 0;
+            }
+            .attach {
+                background-image: url("./img/1.jpg");
+                background-size: cover;
+                /*background-attachment: fixed;*/
+                background-position: center center;
+            }
+            .view {
+                height: 100vh;
+            }
+            .text {
+                font-size: 45px;
+                text-align: center;
+                line-height: 100vh;
+                color: #ffffff;
+            } /*整体的背景*/
+            .water-wave {
+                /*占满整个屏幕*/
+                position: relative;
+                height: 100vh;
+                width: 100vw;
+                background-image: url("../images/2.png");
+                background-size: cover;
+                background-position: center center;
+                background-attachment: fixed;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+            /*存放波纹的一个自适应的正方形*/
+            .wave-container {
+                position: absolute;
+                /* vmin =  视口width > 视口height ?  height : width*/
+                width: 80vmin;
+                height: 80vmin;
+            }
+            .center {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                /*背景铺满*/
+                background-size: cover;
+            }
+            .wave {
+                /*每个波纹居中*/
+                position: absolute;
+                top: calc((100% - 10vmin) / 2);
+                left: calc((100% - 10vmin) / 2);
+                width: 10vmin;
+                height: 10vmin;
+                border-radius: 50%;
+                /*开启3d加速*/
+                transform: translate3d(0, 0, 0);
+                background-image: url("./img/1.jpg");
+                background-position: center center;
+                background-attachment: fixed;
+                /*所有属性变化过渡200ms*/
+                transition: all 0.2s;
+            }
+
+            /*每个波纹的动画延迟不一样， size由大变小再
+变为100%这样效果更逼真*/
+            .wave1 {
+                /*forwards停留在动画的最后一帧*/
+                animation: move 1s ease-out 0.1s forwards;
+                background-size: 106%;
+                z-index: 10;
+            }
+
+            .wave2 {
+                animation: move 1s ease-out 0.15s forwards;
+                background-size: 102%;
+                z-index: 20;
+            }
+
+            .wave3 {
+                animation: move 1s ease-out 0.25s forwards;
+                background-size: 104%;
+                z-index: 30;
+            }
+
+            .wave4 {
+                animation: move 1s ease-out 0.4s forwards;
+                background-size: 100%;
+                z-index: 40;
+            }
+
+            @keyframes move {
+                0% {
+                    top: calc((100% - 10vmin) / 2);
+                    left: calc((100% - 10vmin) / 2);
+                    width: 10vmin;
+                    height: 10vmin;
+                    opacity: 1;
+                }
+                /*动画过程中不能让opacity渐变，不然没有水波纹的效果*/
+                /*但是这样又会产生一点小抖动， 不过不影响效果*/
+                /*你也可以注释掉看看*/
+                99% {
+                    opacity: 1;
+                }
+                100% {
+                    top: calc((100% - 40vmin) / 2);
+                    left: calc((100% - 40vmin) / 2);
+                    width: 40vmin;
+                    height: 40vmin;
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+    <body><div class="water-wave">
+        <div class="attach view"></div>
+        <div class="text view">I WANT FLY</div>
+        <div class="attach view"></div>
+        <div class="text view">I WANT FLY</div>
+        <div class="attach view"></div>
+        <div class="text view">I WANT FLY</div>
+        <div class="attach view"></div>
+    </div>
+        
+    </body>
+</html>
+<script>
+    const container = document.getElementsByClassName("water-wave"); // 取父级
+
+    const number = 4; // 自定义产生几个水波纹
+
+    let index = 0; // 定义每次点击产生的波纹的层级
+
+    const containerWidth =
+        document.body.clientHeight > document.body.clientWidth
+            ? (document.body.clientWidth * 0.8) / 2
+            : (document.body.clientHeight * 0.8) / 2;
+    // 取包裹波纹的正方形的半个宽 这是为了计算点击时正方形的位置
+
+    container[0].addEventListener(
+        "click",
+        e => {
+            // 传入事件， 父级，  波纹数， 层级
+            addWave(e, container[0], number, index++);
+        },
+        false
+    ); // 注册点击事件
+
+    // 点击触发
+    function addWave(e, parentNode, number, index) {
+        // 渲染完波纹后插入父级， 传入波纹数， 点击的坐标x, y ，层级
+        parentNode.appendChild(renderWave(number, e.pageX, e.pageY, index));
+
+        //  移除每次点击产生的波纹，
+        //  index是用来识别每次点击的波纹相当于唯一的ID
+        removeWave(parentNode, index);
+    }
+
+    // 渲染波纹的函数
+    function renderWave(number, x, y, z) {
+        let childrenNode = "";
+        // 创建一个父级div元素用来包裹波纹
+        let childrenContainer = document.createElement("div");
+        // 添加一个class用来标记，方便删除
+        childrenContainer.classList.add(`remove${z}`);
+        // 循环产生波纹
+        for (let i = 0; i < number; i++) {
+            childrenNode += `<div class='wave wave${i + 1}'></div>`;
+        }
+        // 波纹放进div里
+        childrenContainer.innerHTML = `<div class='wave-container' style='left:${x -
+            containerWidth}px;top:${y - containerWidth}px;z-index:${z}'>
+            <div class="center">
+                ${childrenNode}
+            </div>
+         </div>`;
+        // 返回这个div
+        return childrenContainer;
+    }
+
+    function removeWave(parentNode, index) {
+        // 延迟3秒删除波纹
+        setTimeout(() => {
+            const node = document.getElementsByClassName(`remove${index}`)[0];
+            parentNode.removeChild(node);
+        }, 3000);
+    }
+</script>
