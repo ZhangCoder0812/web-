@@ -1,0 +1,168 @@
+/* 设置input 的placeholder的字体样式 
+   <input type="text" placeholder="请设置用户名">
+*/
+
+input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: red;
+}
+input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: red;
+}
+input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: red;
+}
+input:-moz-placeholder {
+    /* Firefox 18- */
+    color: red;
+}
+input:focus {
+    background-color: red;
+}
+input {
+    border: none;
+    outline: none;
+}
+
+/* ------------  相邻兄弟选择器之常用场景
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+*/
+ul {
+    width: 500px;
+    margin: auto;
+    list-style: none;
+    padding: 0;
+    border: 1px solid red;
+    text-align: center;
+}
+li + li {
+    border-top: 1px solid red;
+}
+
+/* ------------- outline属性的妙用技巧  区别: outline不计算大小 border计算大小
+
+  <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+  </ul>
+
+*/
+* {
+    padding: 0;
+    margin: 0;
+}
+ul {
+    list-style: none;
+    width: 600px;
+    margin: auto;
+}
+li {
+    padding: 10px;
+    border: 10px solid pink;
+    outline-offset: -10px;
+}
+li + li {
+    margin-top: -10px;
+}
+li:hover {
+    outline: 10px solid gold;
+}
+
+/* ---------------- 隐藏滚动条或更改滚动条样式
+*/
+.scroll-container {
+    width: 500px;
+    height: 150px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    overflow: auto; /*必须*/
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+    background: white;
+}
+
+.scroll-container::-webkit-scrollbar-corner,
+  /* 滚动条角落 */
+.scroll-container::-webkit-scrollbar-thumb,
+.scroll-container::-webkit-scrollbar-track {
+    /*滚动条的轨道*/
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-corner,
+.scroll-container::-webkit-scrollbar-track {
+    /* 滚动条轨道 */
+    background-color: rgba(180, 160, 120, 0.1);
+    box-shadow: inset 0 0 1px rgba(180, 160, 120, 0.5);
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    /* 滚动条手柄 */
+    background-color: #00adb5;
+}
+
+/* ---------------  虚线框绘制技巧
+   <p class="dotted-line">
+      庭院深深，不知有多深？杨柳依依，飞扬起片片烟雾，一重重帘幕不知有多少层
+   </p>
+*/
+.dotted-line {
+    width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 1px dashed transparent;
+    background: linear-gradient(white, white) padding-box,
+        repeating-linear-gradient(-45deg, red 0, #ccc 0.25em, white 0, white 0.75em);
+}
+
+/* 表格边框合并
+         <table border="1">
+            <thead>
+                <tr>
+                    <th>第一列</th>
+                    <th>第二列</th>
+                    <th>第三列</th>
+                    <th>第四列</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.1</td>
+                    <td>1.2</td>
+                    <td>1.3</td>
+                    <td>1.4</td>
+                </tr>
+                <tr>
+                    <td>2.1</td>
+                    <td>2.2</td>
+                    <td>2.3</td>
+                    <td>2.4</td>
+                </tr>
+                <tr>
+                    <td>3.1</td>
+                    <td>3.2</td>
+                    <td>3.3</td>
+                    <td>3.4</td>
+                </tr>
+            </tbody>
+        </table>
+
+*/
+table {
+    border-collapse: collapse;
+}
