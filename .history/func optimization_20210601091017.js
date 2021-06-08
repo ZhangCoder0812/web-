@@ -11,24 +11,24 @@
 //      比如在一个负责取得用户信息的函数里面，我们还需要打印跟用户信息有关的log，那么打印log的语句就
 //    可以被封装在一个独立的函数里：
 
-var getUserInfo = function() {
-    ajax("http:// xxx.com/userInfo", function(data) {
-        console.log("userId: " + data.userId);
-        console.log("userName: " + data.userName);
-        console.log("nickName: " + data.nickName);
-    });
-};
-//  改成：
-var getUserInfo = function() {
-    ajax("http:// xxx.com/userInfo", function(data) {
-        printDetails(data);
-    });
-};
-
-var printDetails = function(data) {
+var getUserInfo = function () {
+  ajax("http:// xxx.com/userInfo", function (data) {
     console.log("userId: " + data.userId);
     console.log("userName: " + data.userName);
     console.log("nickName: " + data.nickName);
+  });
+};
+//  改成：
+var getUserInfo = function () {
+  ajax("http:// xxx.com/userInfo", function (data) {
+    printDetails(data);
+  });
+};
+
+var printDetails = function (data) {
+  console.log("userId: " + data.userId);
+  console.log("userName: " + data.userName);
+  console.log("nickName: " + data.nickName);
 };
 
 //  ----------------------    合并重复的条件片段     ---------------
@@ -37,27 +37,27 @@ var printDetails = function(data) {
 //  currPage，currPage表示即将跳转的页码。在跳转之前，为防止currPage传入过小或
 //  者过大的数字，我们要手动对它的值进行修正，详见如下伪代码：
 
-var paging = function(currPage) {
-    if (currPage <= 0) {
-        currPage = 0;
-        jump(currPage); // 跳转
-    } else if (currPage >= totalPage) {
-        currPage = totalPage;
-        jump(currPage); // 跳转
-    } else {
-        jump(currPage); // 跳转
-    }
+var paging = function (currPage) {
+  if (currPage <= 0) {
+    currPage = 0;
+    jump(currPage); // 跳转
+  } else if (currPage >= totalPage) {
+    currPage = totalPage;
+    jump(currPage); // 跳转
+  } else {
+    jump(currPage); // 跳转
+  }
 };
 
 // 可以看到，负责跳转的代码jump( currPage )在每个条件分支内都出现了，所以完全可以把这句代码独立出来
 
-var paging = function(currPage) {
-    if (currPage <= 0) {
-        currPage = 0;
-    } else if (currPage >= totalPage) {
-        currPage = totalPage;
-    }
-    jump(currPage); // 把jump函数独立出来
+var paging = function (currPage) {
+  if (currPage <= 0) {
+    currPage = 0;
+  } else if (currPage >= totalPage) {
+    currPage = totalPage;
+  }
+  jump(currPage); // 把jump函数独立出来
 };
 
 //  ----------------------    把条件分支语句提炼成函数     ---------------
@@ -65,36 +65,36 @@ var paging = function(currPage) {
 //  假设现在有一个需求是编写一个计算商品价格的getPrice函数，商品的计算只有一个规则：
 //  如果当前正处于夏季，那么全部商品将以8折出售。代码如下
 
-var getPrice = function(price) {
-    var date = new Date();
-    if (date.getMonth() >= 6 && date.getMonth() <= 9) {
-        // 夏天
-        return price * 0.8;
-    }
-    return price;
+var getPrice = function (price) {
+  var date = new Date();
+  if (date.getMonth() >= 6 && date.getMonth() <= 9) {
+    // 夏天
+    return price * 0.8;
+  }
+  return price;
 };
 
 // 观察这句代码：
 if (date.getMonth() >= 6 && date.getMonth() <= 9) {
-    // ...
+  // ...
 }
 
-// 这句代码要表达的意思很简单，就是判断当前是否正处于夏天（7~10月）。尽管这句代码很短小，
-// 但代码表达的意图和代码自身还存在一些距离，阅读代码的人必须要多花一些精力才能明白它传达的意图。
-// 其实可以把这句代码提炼成一个单独的函数，既能更准确地表达代码的意思，函数名本身又能起到注释的作用。
-// 代码如下：
+//    这句代码要表达的意思很简单，就是判断当前是否正处于夏天（7~10月）。尽管这句代码很短小，
+//    但代码表达的意图和代码自身还存在一些距离，阅读代码的人必须要多花一些精力才能明白它传达的意图。
+//    其实可以把这句代码提炼成一个单独的函数，既能更准确地表达代码的意思，函数名本身又能起到注释的作用。
+//    代码如下：
 
-var isSummer = function() {
-    var date = new Date();
-    return date.getMonth() >= 6 && date.getMonth() <= 9;
+var isSummer = function () {
+  var date = new Date();
+  return date.getMonth() >= 6 && date.getMonth() <= 9;
 };
 
-var getPrice = function(price) {
-    if (isSummer()) {
-        // 夏天
-        return price * 0.8;
-    }
-    return price;
+var getPrice = function (price) {
+  if (isSummer()) {
+    // 夏天
+    return price * 0.8;
+  }
+  return price;
 };
 
 //  ----------------------    合理使用循环     ---------------
@@ -102,30 +102,34 @@ var getPrice = function(price) {
 //  还可以使代码量更少。下面有一段创建XHR对象的代码，为了简化示例，我们只考虑版本9以下的IE浏览器，
 //  代码如下：
 
-var createXHR = function() {
-    var xhr;
+var createXHR = function () {
+  var xhr;
+  try {
+    xhr = new ActiveXObject("MSXML2.XMLHttp.6.0");
+  } catch (e) {
     try {
-        xhr = new ActiveXObject("MSXML2.XMLHttp.6.0");
+      xhr = new ActiveXObject("MSXML2.XMLHttp.3.0");
     } catch (e) {
-        try {
-            xhr = new ActiveXObject("MSXML2.XMLHttp.3.0");
-        } catch (e) {
-            xhr = new ActiveXObject("MSXML2.XMLHttp");
-        }
+      xhr = new ActiveXObject("MSXML2.XMLHttp");
     }
-    return xhr;
+  }
+  return xhr;
 };
 var xhr = createXHR();
 
 // 下面我们灵活地运用循环，可以得到跟上面代码一样的效果：
 
-var createXHR = function() {
-    var versions = ["MSXML2.XMLHttp.6.0ddd", "MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp"];
-    for (var i = 0, version; (version = versions[i++]); ) {
-        try {
-            return new ActiveXObject(version);
-        } catch (e) {}
-    }
+var createXHR = function () {
+  var versions = [
+    "MSXML2.XMLHttp.6.0ddd",
+    "MSXML2.XMLHttp.3.0",
+    "MSXML2.XMLHttp",
+  ];
+  for (var i = 0, version; (version = versions[i++]); ) {
+    try {
+      return new ActiveXObject(version);
+    } catch (e) {}
+  }
 };
 var xhr = createXHR();
 
@@ -134,19 +138,19 @@ var xhr = createXHR();
 //  但关于“函数只有一个出口”，往往会有一些不同的看法。
 //  下面这段伪代码是遵守“函数只有一个出口的”的典型代码：
 
-var del = function(obj) {
-    var ret;
-    if (!obj.isReadOnly) {
-        // 不为只读的才能被删除
-        if (obj.isFolder) {
-            // 如果是文件夹
-            ret = deleteFolder(obj);
-        } else if (obj.isFile) {
-            // 如果是文件
-            ret = deleteFile(obj);
-        }
+var del = function (obj) {
+  var ret;
+  if (!obj.isReadOnly) {
+    // 不为只读的才能被删除
+    if (obj.isFolder) {
+      // 如果是文件夹
+      ret = deleteFolder(obj);
+    } else if (obj.isFile) {
+      // 如果是文件
+      ret = deleteFile(obj);
     }
-    return ret;
+  }
+  return ret;
 };
 
 //  嵌套的条件分支语句绝对是代码维护者的噩梦，对于阅读代码的人来说，嵌套的if、else语句相比平铺的if、else，
@@ -156,17 +160,17 @@ var del = function(obj) {
 //  在进入这些条件分支之后，就立即让这个函数退出。要做到这一点，有一个常见的技巧，即在面对一个嵌套的if分支时，
 //  我们可以把外层if表达式进行反转。重构后的del函数如下：
 
-var del = function(obj) {
-    if (obj.isReadOnly) {
-        // 反转if表达式
-        return;
-    }
-    if (obj.isFolder) {
-        return deleteFolder(obj);
-    }
-    if (obj.isFile) {
-        return deleteFile(obj);
-    }
+var del = function (obj) {
+  if (obj.isReadOnly) {
+    // 反转if表达式
+    return;
+  }
+  if (obj.isFolder) {
+    return deleteFolder(obj);
+  }
+  if (obj.isFile) {
+    return deleteFile(obj);
+  }
 };
 
 // ----------------------    传递对象参数代替过长的参数列表     ---------------
@@ -174,34 +178,34 @@ var del = function(obj) {
 //  含义，在使用的时候，还要小心翼翼，以免少传了某个参数或者把两个参数搞反了位置。如果我们想在第3个参数和第4个参数
 //  之中增加一个新的参数，就会涉及许多代码的修改，代码如下
 
-var setUserInfo = function(id, name, address, sex, mobile, qq) {
-    console.log("id= " + id);
-    console.log("name= " + name);
-    console.log("address= " + address);
-    console.log("sex= " + sex);
-    console.log("mobile= " + mobile);
-    console.log("qq= " + qq);
+var setUserInfo = function (id, name, address, sex, mobile, qq) {
+  console.log("id= " + id);
+  console.log("name= " + name);
+  console.log("address= " + address);
+  console.log("sex= " + sex);
+  console.log("mobile= " + mobile);
+  console.log("qq= " + qq);
 };
 
 setUserInfo(1314, "sven", "shenzhen", "male", "137********", 377876679);
 // 这时我们可以把参数都放入一个对象内，然后把该对象传入setUserInfo 函数，setUserInfo函数需要的数据可以自行从
 // 该对象里获取。现在不用再关心参数的数量和顺序，只要保证参数对应的key值不变就可以了
-var setUserInfo = function(obj) {
-    console.log("id= " + obj.id);
-    console.log("name= " + obj.name);
-    console.log("address= " + obj.address);
-    console.log("sex= " + obj.sex);
-    console.log("mobile= " + obj.mobile);
-    console.log("qq= " + obj.qq);
+var setUserInfo = function (obj) {
+  console.log("id= " + obj.id);
+  console.log("name= " + obj.name);
+  console.log("address= " + obj.address);
+  console.log("sex= " + obj.sex);
+  console.log("mobile= " + obj.mobile);
+  console.log("qq= " + obj.qq);
 };
 
 setUserInfo({
-    id: 1314,
-    name: "sven",
-    address: "shenzhen",
-    sex: "male",
-    mobile: "137********",
-    qq: 377876679,
+  id: 1314,
+  name: "sven",
+  address: "shenzhen",
+  sex: "male",
+  mobile: "137********",
+  qq: 377876679,
 });
 
 // ----------------------    尽量减少参数数量     ---------------
@@ -211,15 +215,15 @@ setUserInfo({
 // 个非常简单的示例。有一个画图函数draw，它现在只能绘制正方形，接收了3个参数，分别是图形的width、
 // heigth以及square：
 
-var draw = function(width, height, square) {};
+var draw = function (width, height, square) {};
 
 // 但实际上正方形的面积是可以通过width和height计算出来的，于是我们可以把参数square从draw函数中去掉：
 
 // 假设以后这个draw函数开始支持绘制圆形，我们需要把参数width和height换成半径radius， 但图形的面积
 // square始终不应该由客户传入，而是应该在draw函数内部，由传入的参数加上一定的规则计算得来。此时，我
 // 们可以使用策略模式，让draw函数成为一个支持绘制多种图形的函数
-var draw = function(width, height) {
-    var square = width * height;
+var draw = function (width, height) {
+  var square = width * height;
 };
 
 // ----------------------    少用三目运算符     ---------------
@@ -238,36 +242,36 @@ var global = typeof window !== "undefined" ? window : this;
 //  但如果条件分支逻辑非常复杂，如下段代码所示，那我们最好的选择还是按部就班地编写if、else。if、else语句
 // 的好处很多，一是阅读相对容易，二是修改的时候比修改三目运算符周围的代码更加方便：
 if (!aup || !bup) {
-    return a === doc
-        ? -1
-        : b === doc
-        ? 1
-        : aup
-        ? -1
-        : bup
-        ? 1
-        : sortInput
-        ? indexOf.call(sortInput, a) - indexOf.call(sortInput, b)
-        : 0;
+  return a === doc
+    ? -1
+    : b === doc
+    ? 1
+    : aup
+    ? -1
+    : bup
+    ? 1
+    : sortInput
+    ? indexOf.call(sortInput, a) - indexOf.call(sortInput, b)
+    : 0;
 }
 
 // ----------------------    合理使用链式调用     ---------------
 //     经常使用jQuery的程序员相当习惯链式调用方法，在JavaScript中，可以很容易地实现方法的链式调用，即让方法
 //  调用结束后返回对象自身，如下代码所示：
 
-var User = function() {
-    this.id = null;
-    this.name = null;
+var User = function () {
+  this.id = null;
+  this.name = null;
 };
 
-User.prototype.setId = function(id) {
-    this.id = id;
-    return this;
+User.prototype.setId = function (id) {
+  this.id = id;
+  return this;
 };
 
-User.prototype.setName = function(name) {
-    this.name = name;
-    return this;
+User.prototype.setName = function (name) {
+  this.name = name;
+  return this;
 };
 
 console.log(new User().setId(1314).setName("sven"));
@@ -275,16 +279,16 @@ console.log(new User().setId(1314).setName("sven"));
 // 或者：
 
 var User = {
-    id: null,
-    name: null,
-    setId: function(id) {
-        this.id = id;
-        return this;
-    },
-    setName: function(name) {
-        this.name = name;
-        return this;
-    },
+  id: null,
+  name: null,
+  setId: function (id) {
+    this.id = id;
+    return this;
+  },
+  setName: function (name) {
+    this.name = name;
+    return this;
+  },
 };
 console.log(User.setId(1314).setName("sven"));
 
@@ -302,17 +306,17 @@ user.setName("sven");
 // 在HTML5版“街头霸王”的第一版代码中，负责创建游戏人物的Spirit 类非常庞大，不仅要负责创建人物精灵，还包括了
 // 人物的攻击、防御等动作方法，代码如下
 
-var Spirit = function(name) {
-    this.name = name;
+var Spirit = function (name) {
+  this.name = name;
 };
 
-Spirit.prototype.attack = function(type) {
-    // 攻击
-    if (type === "waveBoxing") {
-        console.log(this.name + ": 使用波动拳");
-    } else if (type === "whirlKick") {
-        console.log(this.name + ": 使用旋风腿");
-    }
+Spirit.prototype.attack = function (type) {
+  // 攻击
+  if (type === "waveBoxing") {
+    console.log(this.name + ": 使用波动拳");
+  } else if (type === "whirlKick") {
+    console.log(this.name + ": 使用旋风腿");
+  }
 };
 
 var spirit = new Spirit("RYU");
@@ -322,34 +326,34 @@ spirit.attack("whirlKick"); // 输出：RYU: 使用旋风腿
 
 // 后来发现，Spirit.prototype.attack这个方法实现是太庞大了，实际上它完全有必要作为一个单独的类存在。面向对象
 // 设计鼓励将行为分布在合理数量的更小对象之中：
-var Attack = function(spirit) {
-    this.spirit = spirit;
+var Attack = function (spirit) {
+  this.spirit = spirit;
 };
 
-Attack.prototype.start = function(type) {
-    return this.list[type].call(this);
+Attack.prototype.start = function (type) {
+  return this.list[type].call(this);
 };
 
 Attack.prototype.list = {
-    waveBoxing: function() {
-        console.log(this.spirit.name + ": 使用波动拳");
-    },
-    whirlKick: function() {
-        console.log(this.spirit.name + ": 使用旋风腿");
-    },
+  waveBoxing: function () {
+    console.log(this.spirit.name + ": 使用波动拳");
+  },
+  whirlKick: function () {
+    console.log(this.spirit.name + ": 使用旋风腿");
+  },
 };
 
 // 现在的Spirit类变得精简了很多，不再包括各种各样的攻击方法，而是把攻击动作委托给Attack类的对象来执行，这段代码
 // 也是策略模式的运用之一：
 
-var Spirit = function(name) {
-    this.name = name;
-    this.attackObj = new Attack(this);
+var Spirit = function (name) {
+  this.name = name;
+  this.attackObj = new Attack(this);
 };
 
-Spirit.prototype.attack = function(type) {
-    // 攻击
-    this.attackObj.start(type);
+Spirit.prototype.attack = function (type) {
+  // 攻击
+  this.attackObj.start(type);
 };
 
 var spirit = new Spirit("RYU");
@@ -361,70 +365,70 @@ spirit.attack("whirlKick"); // 输出：RYU: 使用旋风
 // 假设在函数体内有一个两重循环语句，我们需要在内层循环中判断，当达到某个临界条件时退出外层的循环。我们大多数时候会引
 // 入一个控制标记变量：
 
-var func = function() {
-    var flag = false;
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
-            if (i * j > 30) {
-                flag = true;
-                break;
-            }
-        }
-        if (flag === true) {
-            break;
-        }
+var func = function () {
+  var flag = false;
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 10; j++) {
+      if (i * j > 30) {
+        flag = true;
+        break;
+      }
     }
+    if (flag === true) {
+      break;
+    }
+  }
 };
 
 // 第二种做法是设置循环标记：
-var func = function() {
-    outerloop: for (var i = 0; i < 10; i++) {
-        innerloop: for (var j = 0; j < 10; j++) {
-            if (i * j > 30) {
-                break outerloop;
-            }
-        }
+var func = function () {
+  outerloop: for (var i = 0; i < 10; i++) {
+    innerloop: for (var j = 0; j < 10; j++) {
+      if (i * j > 30) {
+        break outerloop;
+      }
     }
+  }
 };
 
 // 这两种做法无疑都让人头晕目眩，更简单的做法是在需要中止循环的时候直接退出整个方法：
-var func = function() {
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
-            if (i * j > 30) {
-                return;
-            }
-        }
+var func = function () {
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 10; j++) {
+      if (i * j > 30) {
+        return;
+      }
     }
+  }
 };
 
 // 当然用return直接退出方法会带来一个问题，如果在循环之后还有一些将被执行的代码呢？如果我们
 // 提前退出了整个方法，这些代码就得不到被执行的机会
 
-var func = function() {
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
-            if (i * j > 30) {
-                return;
-            }
-        }
+var func = function () {
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 10; j++) {
+      if (i * j > 30) {
+        return;
+      }
     }
-    console.log(i); // 这句代码没有机会被执行
+  }
+  console.log(i); // 这句代码没有机会被执行
 };
 
 // 为了解决这个问题，我们可以把循环后面的代码放到return后面，如果代码比较多，就应该把它们提炼成一个单独的函数：
-var print = function(i) {
-    console.log(i);
+var print = function (i) {
+  console.log(i);
 };
 
-var func = function() {
-    for (var i = 0; i < 10; i++) {
-        for (var j = 0; j < 10; j++) {
-            if (i * j > 30) {
-                return print(i);
-            }
-        }
+var func = function () {
+  for (var i = 0; i < 10; i++) {
+    for (var j = 0; j < 10; j++) {
+      if (i * j > 30) {
+        return print(i);
+      }
     }
+  }
 };
 
 func();

@@ -126,7 +126,6 @@ console.log(obj.func?.()); // 不报错，输出 undefined
 // 可选链可以使得表达式在函数不存在时返回 undefined 而不是直接抛异常
 // const result = someInterface.customFunc?.()
 
-
 // -----------------   私有方法/属性  -----------------
 // 在一个类里面可以给属性前面增加 # 私有标记的方式来标记为私有，除了属性可以被标记为私有外，
 // getter/setter 也可以标记为私有，方法也可以标为私有
@@ -134,6 +133,7 @@ class Person {
     getDesc() {
         return this.#name + " " + this.#getAge();
     }
+
     #getAge() {
         return this.#age;
     } // 私有方法
@@ -146,6 +146,3 @@ class Person {
 const a = new Person();
 console.log(a.age); // undefined 直接访问不到
 console.log(a.getDesc()); // foo 23
-
-
-// -----------------   私有方法/属性  -----------------

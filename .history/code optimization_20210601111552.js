@@ -146,6 +146,3 @@ class Person {
 const a = new Person();
 console.log(a.age); // undefined 直接访问不到
 console.log(a.getDesc()); // foo 23
-
-
-// -----------------   私有方法/属性  -----------------
