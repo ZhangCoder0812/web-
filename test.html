@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Title</title>
-        <style>
-            .fMain {
-                fill: #0093ff;
-            }
-            @keyframes dash {
-                100% {
-                    stroke-dashoffset: -10;
-                }
-            }
-            .polyLine {
-                animation: dash 0.4s linear infinite;
-            }
-        </style>
-    </head>
-    <body>
-        <svg
-            data-v-5f329025=""
-            version="1.1"
-            viewBox="0 0 109 42"
-            style="width: 105px; height: 38px;"
-        >
-            <path
-                data-v-5f329025=""
-                d="M 2 2 L 2 32 q 2 6 8 6 M 8 38 L 105 38"
-                fill="none"
-                stroke="#0093ff"
-                stroke-width="2"
-                stroke-dasharray="5"
-                class=" polyLine"
-            ></path>
-        </svg>
-
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      body {
+        height: 100vh;
+        background-color: lightblue;
+        margin: 0;
+        padding: 0;
+      }
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+      .fMain {
+        fill: #0093ff;
+      }
+      @keyframes dash {
+        100% {
+          stroke-dashoffset: -10;
+        }
+      }
+      .polyLine {
+        animation: dash 0.4s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <!--  viewBox="0 0 109 42" -->
+    <svg preserveAspectRatio='none' version="1.1" viewBox="0 0 800 800">
+      <path
         
-    </body>
+        d="M 2 2 L 2 90 q 2 6 8 6 M 8 96 L 100 96"
+        fill="none"
+        stroke="#0093ff"
+        stroke-width="2"
+        stroke-dasharray="5"
+        class="polyLine"
+      ></path>
+    </svg>
+  </body>
 </html>

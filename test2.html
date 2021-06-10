@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        path {
+            stroke: #000;
+            fill: transparent;
+            stroke-width: 2px;
+        }
+    </style>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script></head>
+<body>
+<button id="drawBtn" onclick="draw()">绘制</button>
+<button id="eraseBtn" onclick="erase()" style="display: none">擦除</button>
+ 
+<svg id="svg" width=600 height=600>
+    <path id="path" d="M 50 150 L 250 150 Q 300 150, 300 200 L 300 400 Q 300 450,350 450 L 550 450"></path>
+</svg>
+</body>
+<script>
+    //获取svg 路径的总长度
+    let path = document.getElementById('path');
+    let len = path.getTotalLength();
+    //绘制出来之后就是 len长的实线+len长的空白+len长的实线+len长的空白...后面重复
+    path.style.strokeDasharray = len;
+    //设为len之后，实线部分全部偏移出去，空白部分填满整个路径
+    path.style.strokeDashoffset = len;
+ 
+    /**
+     * 通过更改蚂蚁线的偏移量来控制路径的绘制和擦除
+     */
+    function draw() {
+        $('button').attr('disabled', true);
+        $('#drawBtn').hide();
+        $('#eraseBtn').show();
+        $('#path').animate({
+            strokeDashoffset: '0',
+        }, 1000, function () {
+            $('button').removeAttr('disabled')
+        });
+    }
+ 
+    function erase() {
+        $('button').attr('disabled', true);
+        $('#drawBtn').show();
+        $('#eraseBtn').hide();
+        $('#path').animate({
+            strokeDashoffset: len,
+        }, 1000, function () {
+            $('button').removeAttr('disabled')
+        });
+    }
+ 
+</script>
+</html>
