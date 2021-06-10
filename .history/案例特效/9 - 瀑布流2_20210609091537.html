@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 4px;
+      }
+      .masonry {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 1500px;
+      }
+      .item {
+        width: 25%;
+        padding: 2px;
+        box-sizing: border-box;
+        position: relative;
+        counter-increment: item-counter;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .item::after {
+        position: absolute;
+        display: block;
+        top: 2px;
+        left: 2px;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+        background-color: #000;
+        color: #fff;
+        content: counter(item-counter);
+      }
+      /* 设定编号 自左向右 自上而下 排列*/
+
+      .item:nth-child(4n + 1) {
+        order: 1;
+      }
+
+      .item:nth-child(4n + 2) {
+        order: 2;
+      }
+
+      .item:nth-child(4n + 3) {
+        order: 3;
+      }
+
+      .item:nth-child(4n) {
+        order: 4;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+        使用 flex 布局 竖着排 给定一高度让其内容撑大容器。
+        弊端：要先知道内容高度 根据给定的列数 设置一个合理的高度
+       -->
+    <div class="masonry">
+      <div class="item">
+        <img src="./images/1.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/2.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/3.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/4.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/5.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/6.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/7.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/8.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/9.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/10.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/11.jpg" alt="" />
+    </div>
+    <div class="item">
+        <img src="./images/12.jpg" alt="" />
+    </div>
+    <div class="item">
+      <img src="./images/13.jpg" alt="" />
+  </div>
+  <div class="item">
+    <img src="./images/12.jpg" alt="" />
+</div>
+<div class="item">
+  <img src="./images/12.jpg" alt="" />
+</div>
+    </div>
+  </body>
+</html>

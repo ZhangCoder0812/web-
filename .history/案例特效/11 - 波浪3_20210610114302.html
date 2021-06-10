@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                height: 100vh;
+                width: 100%;
+                background-color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .container {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                border: 2px solid darkturquoise;
+                padding: 10px;
+            }
+            .mave {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                position: relative;
+                background-color: skyblue;
+                overflow: hidden;
+            }
+            .mave::before,
+            .mave::after {
+                content: "";
+                position: absolute;
+                width: 10%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 40%;
+                left: -10%;
+                top: -50%;
+                animation: mave 5s linear infinite;
+            }
+            .mave::after {
+                border-radius: 40%;
+                animation-delay: 1s;
+            }
+            @keyframes mave {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="mave"></div>
+        </div>
+    </body>
+</html>
