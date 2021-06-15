@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .image {
+        position: relative;
+        overflow: hidden;
+      }
+      img {
+        display: block;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(calc(-50% - 47px), 0);
+      }
+      h2 {
+        font-size: 72px;
+        font-family: Helvetica;
+        letter-spacing: -0.012em;
+        width: 290px;
+        font-weight: normal;
+        position: relative;
+        left: 50%;
+        position: sticky;
+        top: -1px;
+        margin: 100px 0;
+        padding: 0;
+        transform: scale(clamp(0.15, var(--scale), 1));
+        transform-origin: 0% 0%;
+      }
+      .pinned {
+        /* color: red; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imac">
+      <h2 style="--scale: 1">Only 11.5mm. Now that's thin.</h2>
+      <div class="image">
+        <img
+          src="https://www.apple.com.cn/v/imac-24/b/images/overview/design_hero__b1s6t07doqj6_large_2x.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  const h2 = document.querySelector("h2");
+  let isPinned = false;
+  const observer = new IntersectionObserver(
+    ([e]) => {
+      isPinned = e.intersectionRatio < 1;
+      e.target.classList.toggle("pinned", isPinned);
+    },
+    { threshold: [1] }
+  );
+  observer.observe(h2);
+  document.addEventListener("scroll", (e) => {
+    if (isPinned) {
+      let html = document.documentElement;
+      let height =
+        parseInt(getComputedStyle(h2).getPropertyValue("height")) +
+        parseInt(getComputedStyle(h2).getPropertyValue("margin-bottom"));
+      let marginTop = parseInt(
+        getComputedStyle(h2).getPropertyValue("margin-top")
+      );
+      let scrolled = (html.scrollTop - marginTop) / height;
+      h2.style.setProperty("--scale", 1 - scrolled);
+    }
+  });
+</script>
