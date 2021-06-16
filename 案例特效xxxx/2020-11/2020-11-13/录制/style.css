@@ -1,0 +1,140 @@
+:root {
+    --background-color: #2c3e50;
+    --border-color    : #7591AD;
+    --text-color      : #34495e;
+    --color1          : #EC3E27;
+    --color2          : #fd79a8;
+    --color3          : #0984e3;
+    --color4          : #00b894;
+    --color5          : #fdcb6e;
+    --color6          : #e056fd;
+    --color7          : #F97F51;
+    --color8          : #BDC581;
+}
+
+* {
+    margin : 0;
+    padding: 0;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    width           : 100vw;
+    height          : 100vh;
+    background-color: var(--background-color);
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    font-family     : 'Montserrat', sans-serif, Arial, 'Microsoft Yahei';
+}
+
+.channel {
+    position   : absolute;
+    width      : 80%;
+    text-align : center;
+    top        : 50%;
+    left       : 50%;
+    transform  : translate(-50%, -200px);
+    font-size  : 30px;
+    font-weight: bold;
+    color      : #fff;
+}
+
+
+.menu ul {
+    list-style: none;
+}
+
+.menu li {
+    position: relative;
+    float   : left;
+    width   : auto;
+}
+
+.menu li a {
+    display: block;
+
+    background-color: var(--color3);
+    color           : #fff;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size  : 20px;
+    font-weight: bold;
+
+    line-height: 60px;
+
+    min-width: 60px;
+
+    padding: 0 20px;
+
+    text-decoration: none;
+
+    transition: all .3s ease-in-out;
+
+}
+
+.menu li:hover a {
+    background-color: #000;
+}
+
+/* 子菜单 */
+
+.sub {
+    position: absolute;
+
+    top : 60px;
+    left: 0;
+
+    width : 100%;
+    /* 控制高度变化 */
+    /* 解决子菜单占位的bug */
+    /* hover中增加height=auto */
+    height: 0;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    /* 临时显示出来 */
+    /* opacity: 1; */
+    opacity: 0;
+
+    /* 增加过渡时长 */
+    /* 不控制高度，因为高度没有实用具体的像素变化而是auto */
+    transition: all 0.5s;
+
+}
+
+/* 鼠标移入显示 */
+li:hover ul.sub {
+    opacity: 1;
+    height : auto;
+}
+
+.sub li {
+    float        : none;
+    /* 底部加边线 */
+    border-bottom: 1px solid #333;
+}
+
+/* 最后一个元素取消边线 */
+.sub li:last-child {
+    border-bottom: none;
+}
+
+.sub a {
+    color           : #aaa !important;
+    font-weight     : normal !important;
+    line-height     : 1.5 !important;
+    min-width       : auto !important;
+    padding         : 10px !important;
+    background-color: #222 !important;
+}
+
+.sub li:hover a {
+    background-color: #444 !important;
+
+}
