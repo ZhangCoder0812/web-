@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #1e272e;
+      }
+      ul {
+        width: 500px;
+      }
+      li {
+        list-style: none;
+        color: #dadae2;
+        font-size: 18px;
+        margin: 48px 0;
+        position: relative;
+      }
+      li::before,
+      li::after {
+        content: "";
+        display: block;
+        height: 16px;
+        width: 100%;
+        background-color: #1f4a59;
+        position: absolute;
+        bottom: -28px;
+        border-radius: 6px;
+      }
+      li::before {
+        box-shadow: 0 0 6px rgba(75, 207, 250, 0.2);
+      }
+      li:after {
+        background-image: linear-gradient(90deg, #0fbcf9, #34e7e4);
+        animation: run 12s ease-in-out forwards;
+        /* ease-in-out 开始结束比较慢 中间比较快forwards 动画停在结束的位置 */
+      }
+      @keyframes run {
+        from {
+          width: 0;
+        }
+        to {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul>
+        <li class="js">进度条</li>
+      </ul>
+    </main>
+  </body>
+</html>

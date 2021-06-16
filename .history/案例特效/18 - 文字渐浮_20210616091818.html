@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      :root {
+        font-size: 32px;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      .container {
+        width: 700px;
+      }
+      h1 {
+        margin: 0;
+        letter-spacing: -2px;
+      }
+      p {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.3rem;
+        position: relative;
+        top: 0.8rem;
+        opacity: 0;
+        animation: 0.5s swift-up ease-in-out forwards,
+          0.5s fade-in ease-in-out forwards;
+        animation-delay: 0.8s;
+      }
+      @keyframes fade-in {
+        to {
+          opacity: 1;
+        }
+      }
+      span {
+        display: inline-block;
+        /* background-color: #ccc; */
+        overflow: hidden;
+        position: relative;
+        top: 0.8rem;
+        animation: 0.3s swift-up ease-in-out forwards;
+      }
+      i {
+        font-style: normal;
+        position: relative;
+        top: 2rem;
+        animation: 0.5s swift-up ease-in-out forwards;
+      }
+      @keyframes swift-up {
+        to {
+          top: 0rem;
+        }
+      }
+      span:nth-of-type(1),
+      span:nth-of-type(1) i {
+        animation-delay: 0s;
+      }
+      span:nth-of-type(2),
+      span:nth-of-type(2) i {
+        animation-delay: 0.1s;
+      }
+      span:nth-of-type(3),
+      span:nth-of-type(3) i {
+        animation-delay: 0.2s;
+      }
+      span:nth-of-type(4),
+      span:nth-of-type(4) i {
+        animation-delay: 0.3s;
+      }
+      span:nth-of-type(5),
+      span:nth-of-type(5) i {
+        animation-delay: 0.4s;
+      }
+      span:nth-of-type(6),
+      span:nth-of-type(6) i {
+        animation-delay: 0.5s;
+      }
+      span:nth-of-type(7),
+      span:nth-of-type(7) i {
+        animation-delay: 0.6s;
+      }
+      span:nth-of-type(8),
+      span:nth-of-type(8) i {
+        animation-delay: 0.7s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        <span><i>天</i></span>
+        <span><i>外</i></span>
+        <span><i>来</i></span>
+        <span><i>物</i></span>
+        <span><i>-</i></span>
+        <span><i>薛</i></span>
+        <span><i>之</i></span>
+        <span><i>谦</i></span>
+      </h1>
+      <p>
+        你就像天外来物一样求之不得， 你在世俗里的描写不重要里，
+        反正我隐藏的人格是契而不舍， 直到峰值而至的人都不见里。
+      </p>
+    </div>
+  </body>
+</html>
