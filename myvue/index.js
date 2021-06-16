@@ -4,8 +4,8 @@ const vm = new Vue({
     el: "#app",
     data: {
         msg: "hello",
-        name: "wade",
-        age: 12,
+        count:'100' ,
+        testHtml:'<ul><li>1</li><li>2</li></ul>'
     },
     methods: {
         handler() {

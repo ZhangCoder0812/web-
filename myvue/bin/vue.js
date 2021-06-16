@@ -1,3 +1,6 @@
+import Observer from "./observer.js";
+import Compiler from "./compiler.js";
+
 /* 
  包括vue构造函数 接受各种参数
 */
@@ -9,6 +12,10 @@ export default class Vue {
         this.$methods = options.methods;
         this.initRootElement(options);
         this._proxyData(this.$data);
+        // 实例化observer对象 监听数据变化
+        new Observer(this.$data);
+        // 实例化compiler对象 解析指令和模版/插值表达式
+        new Compiler(this);
     }
     // 获取根元素并存储到vue实例 检查一下传入的el是否合规
     initRootElement(options) {
