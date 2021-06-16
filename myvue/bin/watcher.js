@@ -10,7 +10,7 @@ export default class Watcher {
         this.cb = cb;
         Dep.target = this;
         // 老值 这里会触发get方法 在get方法里会去做一些操作？
-        this.oldValue = vm[key];
+        this.oldValue = vm[key];// 这里此时的oldValue都是初始化时候的老值 因为这里就渲染一次 真实的vue不会
         Dep.target = null;
     }
     // 当数据变化的时候更新视图
