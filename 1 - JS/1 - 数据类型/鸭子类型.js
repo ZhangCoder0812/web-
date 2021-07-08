@@ -3,7 +3,7 @@
   鸭子类型：长的像鸭子 我们就称为鸭子 最主要的就是想让其具备鸭子的特点。
            类什么什么的... , 类数组 类promise
            如：类数组 它的__proto__指向Object.prototype 并没有指向
-              Array.prototype。和数据区别就是原型链指向问题，其余的和
+              Array.prototype。和数组区别就是原型链指向问题，其余的和
               数组一样，都能for循环
 
 */

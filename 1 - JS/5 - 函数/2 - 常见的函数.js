@@ -25,7 +25,8 @@ let fn = () => {}; // 箭头函数 没有 prototype
            构造函数this指向实例，相当于给实例添加私有属性
            普通函数执行前面谁点this就是谁，没有的话是window
     return 结果不同：
-           构造函数return的是普通数据类型或不写return 返回的是实例对象，return的是对象则返回该对象
+           构造函数return的是普通数据类型或不写return 返回的是实例对象，
+                  return的是对象则返回该对象
            普通函数return是啥就是啥 不写return是undefined
            
 */

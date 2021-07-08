@@ -24,7 +24,7 @@ var a = {
   i: 0,
   toString() {
     return ++this.i
-  }
+  }  
 }
 
 var a = [1, 2, 3]
