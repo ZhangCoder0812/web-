@@ -46,7 +46,7 @@ let obProxy = new Proxy(obj, {
 console.log(obProxy.name)
 console.log(obProxy.sex) // 报错   没有sex属性
 
-obProxy.age = 100 // 报错    不合法
+obProxy.age = -100 // 报错    不合法
 
 */
 

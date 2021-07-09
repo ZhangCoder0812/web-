@@ -12,7 +12,7 @@
 
 // 简单的的柯理化 函数传参长度固定
 const fn = (...params) => {
-    return function(...args) {
+    return function (...args) {
         let argsArr = [...params, ...args];
         return argsArr.reduce((result, item) => result + item);
     };
@@ -35,7 +35,7 @@ function sum(a, b, c, d, e) {
 // arr 就是收集每次调用时传入的参数
 const curring = (fn, arr = []) => {
     let len = fn.length; // 函数的length就是参数的个数
-    return function(...args) {
+    return function (...args) {
         let newArgs = [...arr, ...args];
         // 传入的参数和函数规定参数一致时就执行
         // 不一致就说明没有收集完 再递归

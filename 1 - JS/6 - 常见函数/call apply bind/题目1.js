@@ -42,5 +42,4 @@ Function.prototype.call.call.call(A, 80, 70); //  NaN undefined
         最后一个call之前的看成一个整体 x ，x执行 传递x，y
         再次执行 x.call()
 
-
 */

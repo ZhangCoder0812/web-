@@ -1,44 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <style>
-      body {
-        height: 100vh;
-        background-color: lightblue;
-        margin: 0;
-        padding: 0;
-      }
-      svg {
-        width: 100%;
-        height: 100%;
-      }
-      .fMain {
-        fill: #0093ff;
-      }
-      @keyframes dash {
-        100% {
-          stroke-dashoffset: -10;
-        }
-      }
-      .polyLine {
-        animation: dash 0.4s linear infinite;
-      }
-    </style>
-  </head>
-  <body>
-    <!--  viewBox="0 0 109 42" -->
-    <svg preserveAspectRatio='none' version="1.1" viewBox="0 0 800 800">
-      <path
-        
-        d="M 2 2 L 2 90 q 2 6 8 6 M 8 96 L 100 96"
-        fill="none"
-        stroke="#0093ff"
-        stroke-width="2"
-        stroke-dasharray="5"
-        class="polyLine"
-      ></path>
-    </svg>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
 </html>
+<script>
+
+    Function.prototype.call = function (ctx, args) {
+        ctx = ctx ? Object(ctx) : window
+        ctx.fn = this
+        let res = ctx.fn(...args)
+        delete ctx.fn
+        return res
+    }
+
+    Function.prototype.apply = function (ctx, args) {
+        ctx = ctx ? Object(ctx) : window
+        if (args && !Array.isArray(args)) {
+            throw new TypeError('args must be arry')
+        }
+        ctx.fn = this
+        let res = args ? ctx.fn(...args) : ctx.fn()
+        delete ctx.fn
+        return res   
+    }
+
+    Function.prototype.bind = function (ctx, ...bindArgs) {
+
+        ctx = ctx ? Object(ctx) : window
+        let _this = this
+        function fBound(...args) {
+            let newArgs = [...bindArgs, ...args]
+            _this.apply(this instanceof fBound ? this : ctx, newArgs)
+        }
+        function Fn() { }
+        Fn.prototype = _this.prototype
+        fBound.prototype = new Fn()
+        return fBound
+
+    }
+
+    function fn(a, b, c, d, e) {
+        console.log(this, a, b, c, d, e)
+    }
+    fn.prototype.say = 'xxxx'
+    let obj = { name: 'wade' }
+
+    let res = fn.bind(obj, [1, 2], 8)
+    let o = new res(4, 5)
+    console.log(o.say)
+
+
+
+</script>

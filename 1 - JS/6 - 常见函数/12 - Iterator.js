@@ -92,7 +92,7 @@ Object.prototype[Symbol.iterator] = function () {
   let _this = this,
     index = 0,
     keys = [...Object.keys(_this), Object.getOwnPropertySymbols(_this)];
-    // 这里对象和数组的写法有所不同 要先拿到所有的keys
+  // 这里对象和数组的写法有所不同 要先拿到所有的keys
   return {
     next() {
       let key = keys[index++];

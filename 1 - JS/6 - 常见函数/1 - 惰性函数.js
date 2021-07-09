@@ -18,11 +18,11 @@
 
 function getCsss(elem, attr) {
     if (window.getComputedStyle) {
-        getCsss = function(elem, attr) {
+        getCsss = function (elem, attr) {
             return window.getComputedStyle(elem)[attr];
         };
     } else {
-        getCsss = function(elem, attr) {
+        getCsss = function (elem, attr) {
             return elem.currentStyle[attr];
         };
     }
