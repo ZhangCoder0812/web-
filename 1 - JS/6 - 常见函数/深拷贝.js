@@ -16,8 +16,8 @@
 
     Error 错误对象不能直接new 会返回一个新的错误对像。 new Error(x .message)
     let er1 = new Error('xxx') // Error xxx
-    let er2 = new Erroe(er1) // Error Error xxx , 不能直接new
-    let er2 = new Erroe(er1.message) //  Error xxx ,每个错误对象有message属性
+    let er2 = new Error(er1) // Error Error xxx , 不能直接new
+    let er2 = new Error(er1.message) //  Error xxx ,每个错误对象有message属性
 
     函数处理：克隆函数外面包一层
     function fn(){
@@ -30,6 +30,7 @@
 
 */
 
+// WeakMap只接受对象作为键名
 
 function deepClone(obj, hash = new WeakMap()) {
     // WeakMap es6 这里借助用来放置死循环 自己引用自己

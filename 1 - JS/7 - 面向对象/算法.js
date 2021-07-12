@@ -4,7 +4,7 @@ let obj = {
   y: 2,
 };
 
-// let minKey = Object.entries(obj).find(å
+// let minKey = Object.entries(obj).find(
 //   (item) => item[1] === Math.min(...Object.values(obj))
 // )[0];
 

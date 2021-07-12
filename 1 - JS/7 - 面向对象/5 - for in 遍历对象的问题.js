@@ -27,11 +27,11 @@ let obj = {
   1: 2,
   2: 1,
 };
-Object.prototype.say = function () {};
+Object.prototype.say = function () { };
 for (let key in obj) {
   console.log(key);
 }
-/* 
+/*  
     1
     2
     name

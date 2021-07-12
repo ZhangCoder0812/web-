@@ -1,54 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <button onclick="start()">抽奖</button>
-    <script>
-      
-      let choujiang = function* () {
-        let count = 3;
-        while (count > 0) {
-          count--;
-          yield;
-          if (count == 0) {
-            alert("没有机会了");
-          } else {
-            alert(`剩余次${count}机会`);
-          }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <button onclick="start()">抽奖</button>
+  <script>
+
+    let choujiang = function* () {
+      let count = 3;
+      while (count > 0) {
+        count--;
+        yield;
+        if (count == 0) {
+          alert("没有机会了");
+        } else {
+          alert(`剩余次${count}机会`);
         }
-      };
-      let it = choujiang();
-      function start() {
-        it.next();
       }
+    };
+    let it = choujiang();
+    function start() {
+      it.next();
+    }
 
-      let ajax = function* () {
-        yield new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve({ status: false });
-          }, 500);
-        });
-      };
+    let ajax = function* () {
+      yield new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({ status: false });
+        }, 500);
+      });
+    };
 
-      let call = function () {
-        let it = ajax();
-        let p = it.next(); // {value:Promise,done:false}
-        p.value.then((data) => {
-          if (data.status) {
-            console.log("连接成功");
-          } else {
-            console.log("连接中...");
-            call();
-          }
-        });
-      };
+    let call = function () {
+      let it = ajax();
+      let p = it.next(); // {value:Promise,done:false}
+      p.value.then((data) => {
+        if (data.status) {
+          console.log("连接成功");
+        } else {
+          console.log("连接中...");
+          call();
+        }
+      });
+    };
 
-      call();
-    </script>
-  </body>
+    call();
+  </script>
+</body>
+
 </html>

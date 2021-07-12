@@ -49,61 +49,61 @@
 
 */
 
-  function Fn() {
-    this.x = 100;
-    this.y = 200;
-    this.getX = function () {
-      console.log(this.x);
-    };
-  }
-  Fn.prototype.getX = function () {
+function Fn() {
+  this.x = 100;
+  this.y = 200;
+  this.getX = function () {
     console.log(this.x);
   };
-  Fn.prototype.getY = function () {
-    console.log(this.y);
-  };
-  let f1 = new Fn();
-  let f2 = new Fn();
-  console.log(f1.getX === f2.getX); // false 不同对象的私有属性
-  console.log(f1.getY === f2.getY); // true 查找的都是原型链上的getY
-  console.log(f1.__proto__.getY === Fn.prototype.getY); // true
-  console.log(f1.__proto__.getX === f2.getX); //  false 前面找的是原型链上的 后面找的是实例私有的
-  console.log(f1.getX === Fn.prototype.getX); // false
-  console.log(f1.constructor); // Fn
-  console.log(Fn.prototype.__proto__.constructor); // Object
-  f1.getX(); // 100
-  f1.__proto__.getX(); // undefined 原型上没有x属性 基于原型链向上找到Object.prototype上也没有x属性
-  f2.getY(); //  200
-  Fn.prototype.getY(); // undefined
+}
+Fn.prototype.getX = function () {
+  console.log(this.x);
+};
+Fn.prototype.getY = function () {
+  console.log(this.y);
+};
+let f1 = new Fn();
+let f2 = new Fn();
+console.log(f1.getX === f2.getX); // false 不同对象的私有属性
+console.log(f1.getY === f2.getY); // true 查找的都是原型链上的getY
+console.log(f1.__proto__.getY === Fn.prototype.getY); // true
+console.log(f1.__proto__.getX === f2.getX); //  false 前面找的是原型链上的 后面找的是实例私有的
+console.log(f1.getX === Fn.prototype.getX); // false
+console.log(f1.constructor); // Fn
+console.log(Fn.prototype.__proto__.constructor); // Object
+f1.getX(); // 100
+f1.__proto__.getX(); // undefined 原型上没有x属性 基于原型链向上找到Object.prototype上也没有x属性
+f2.getY(); //  200
+Fn.prototype.getY(); // undefined
 
 // -------------------------------- 华丽的分割线 --------------------
 
-  function Animal() {
-    this.type = '哺乳类'
-  }
-  Animal.prototype.type = '哺乳'
+function Animal() {
+  this.type = "哺乳类";
+}
+Animal.prototype.type = "哺乳";
 
-  let a = new Animal()
-  console.log(Animal.prototype) // { type: '哺乳' }
-  console.log(Animal.prototype.constructor == Animal) // true
-  console.log(a.__proto__) // 指向当前类的原型
-  console.log(Animal.prototype === a.__proto__) // true
-  console.log(a.type) // 哺乳类 先在自己身上查找 找不到再在原型上查找
+let a = new Animal();
+console.log(Animal.prototype); // { type: '哺乳' }
+console.log(Animal.prototype.constructor == Animal); // true
+console.log(a.__proto__); // 指向当前类的原型
+console.log(Animal.prototype === a.__proto__); // true
+console.log(a.type); // 哺乳类 先在自己身上查找 找不到再在原型上查找
 
-  delete a.type     // 删除自身的type属性
-  console.log(a.type) // 哺乳  先在自己身上查找 找不到再在原型向上查找
+delete a.type; // 删除自身的type属性
+console.log(a.type); // 哺乳  先在自己身上查找 找不到再在原型向上查找
 
-  Animal.prototype.name = '猫'
-  console.log(a.hasOwnProperty('name')) // false hasOwnProperty 检测实例上的属性 
-  console.log('name' in a) // true  in即判断实例上属性 又判断原型上属性
+Animal.prototype.name = "猫";
+console.log(a.hasOwnProperty("name")); // false hasOwnProperty 检测实例上的属性
+console.log("name" in a); // true  in即判断实例上属性 又判断原型上属性
 
-  console.log(a.__proto__.__proto__ === Object.prototype) // true
-  console.log(Object.prototype.__proto__) // null  最顶层对象 
+console.log(a.__proto__.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__); // null  最顶层对象
 
-  /* 
-    特殊的 function Object (即是函数又是对象) 即有 prototype 又有__proto__
-    他们的 __proto__ 强制指向所属类的原型
-  */
-  console.log(Function.__proto__ === Function.prototype) // true
-  console.log(Object.__proto__ === Function.prototype) // true
-  console.log(Object.__proto__ === Object.__proto__) // true
+/* 
+  特殊的 function Object (即是函数又是对象) 即有 prototype 又有__proto__
+  他们的 __proto__ 强制指向所属类的原型
+*/
+console.log(Function.__proto__ === Function.prototype); // true
+console.log(Object.__proto__ === Function.prototype); // true
+console.log(Object.__proto__ === Object.__proto__); // true
