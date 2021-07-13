@@ -44,9 +44,12 @@
       console.log(A.prototype);
 
       function B() {}
-      /* 错误写法
-        B.prototype = A.prototype;   
-        因为这样改变子类的prototype 父类的prototype就会收到影响
+      /*
+        错误写法：
+           1. B.prototype = A.prototype
+              因为这样改变子类的prototype 父类的prototype就会收到影响 而且只能继承原型链上属性和方法
+           2. B.prototype = Object.create(A.prototype)
+              这样写只能继承原型链上属性和方法
        */
       B.prototype = new A();
       B.prototype.constructor = B;

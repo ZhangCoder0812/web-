@@ -100,7 +100,7 @@ class Promise {
     // then 的参数可能没有传 ，没传的话 成功就默认传入成功的函数 将结果丢给下一个then的成功回调
     // 失败就抛错 将结果丢给下一个then 的错误回调
     onfulfilled = typeof onfulfilled === 'function' ? onfulfilled : (data) => data;
-    onrejected = typeof onrejected === 'function'? onrejected : (err) => { throw err };  // // 这里必须要加{} 抛出错不能被return 出来
+    onrejected = typeof onrejected === 'function' ? onrejected : (err) => { throw err };  // // 这里必须要加{} 抛出错不能被return 出来
 
     let promise2 = new Promise((resolve, reject) => {
       if (this.status === STATUS.FULFILLED) {

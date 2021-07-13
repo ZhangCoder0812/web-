@@ -1,6 +1,6 @@
 /*
 
- promise 在es6 规范李已经定义好了 不需要考虑兼容性李
+ promise 在es6 规范里已经定义好了 不需要考虑兼容性李
          目前只有 ie 版本可能不支持
 
  作用：
@@ -21,7 +21,7 @@
 - Promise 是一个类 类中的构造函数需要传入一个executor 默认就会执行（即new Promise 是同步的）
 -  executor 中有两个参数 分别是 resolve reject
 - 创建一个 Promise 默认状态是 pending 等待状态
- （ 媳妇问老公可以给我买个包么 老公不会答 媳妇一直等着 即pending，
+ （ 媳妇问老公可以给我买个包么 老公不回答 媳妇一直等着 即pending，
     某一天老公有钱了说买 就会调用resolve 这时状态是 fulfilled 表示成功
     反之不买就会调用reject 这时状态是 rejected 表示失败
   ）
@@ -33,7 +33,7 @@
 
 */
 
-let myPromise = require('./promis');
+let myPromise = require('./promise');
 let p = new myPromise((resolve, reject) => {
   resolve('成功了');
   // reject('失败了');
