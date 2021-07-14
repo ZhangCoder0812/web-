@@ -18,7 +18,7 @@ setTimeout(async () => {
   await func1();
   console.log(3);
 }, 20);
-for (let i = 0; i < 90000000; i++) {}
+for (let i = 0; i < 90000000; i++) { }
 console.log(4);
 func1().then((result) => {
   console.log(5);
@@ -31,8 +31,8 @@ setTimeout(() => {
 }, 0);
 console.log(8);
 
-/* 
-  
+/*
+
   1
   4
   func1 start
