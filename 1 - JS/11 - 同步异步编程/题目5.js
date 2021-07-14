@@ -19,7 +19,7 @@ Promise.resolve()
   });
 
 
-/* 
+/*
 
    b
    f
@@ -28,4 +28,4 @@ Promise.resolve()
    d
 
 
-*/  
+*/

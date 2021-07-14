@@ -1,6 +1,5 @@
 import { isPlainObject, jsonToUrl } from "../常用方法封装.js";
 
-
 let baseURL = "http://127.0.0.1:5500",
   // 默认配置项
   inital = {

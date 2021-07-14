@@ -37,7 +37,7 @@
       console.log(b1.cars); // ["奔驰", "宝马", "奥迪"."法拉利"]
       let b2 = new B("lbj", 20);
       console.log(b2.cars); // ["奔驰", "宝马", "奥迪"]  不会导致其他实例也受影响
-
+      console.log(b2.age); // undefined 继承不了原型链上属性和方法
       /* 
         call继承:
            缺点：浪费内存 每创建一个实例 都会创建新的内存去存放属性和方法

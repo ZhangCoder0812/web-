@@ -40,7 +40,7 @@ function isPromise(val) {
 //         //  不是就直接放在result里
 //         for (let i = 0; i < promises.length; i++) {
 //             if (isPromise(promises[i])) {
-//                 promises[i].then(data => {
+//                 promises[i].then(data => { 
 //                     processData(i, data)
 //                 }, err => {
 //                     reject(err)
@@ -63,7 +63,7 @@ Promise.all = function (promiseArr) {
         promiseArr.forEach((p, index) => {
             Promise.resolve(p).then(data => { // 这里可以使用Promise.resolve() 省去判断是不是Promise
                 result[index] = data          // Promise.resolve() 会把参数包装成一个 Promise
-                if (times === result.length) {
+                if (++times === result.length) {
                     resolve(result)
                 }
             }, err => {

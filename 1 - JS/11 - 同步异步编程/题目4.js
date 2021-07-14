@@ -38,3 +38,36 @@ setTimeout(() => {
 
 
 */
+
+// 若去掉外层的 setTimeout 。上一个then执行完才把下一个then放入任务队列
+console.log("start");
+let intervalId;
+Promise.resolve()
+  .then(() => {
+    console.log("p1");
+  })
+  .then(() => {
+    console.log("p2");
+  });
+
+Promise.resolve()
+  .then(() => {
+    console.log("p3");
+  })
+  .then(() => {
+    console.log("p4");
+  });
+intervalId = setInterval(() => {
+  console.log("interval");
+}, 3000);
+console.log("timeout1");
+
+/*
+  start
+  timeout1
+  p1
+  p3
+  p2
+  p4
+  interval
+*/

@@ -83,7 +83,7 @@ export default axios;
 
    - token方式：实时校验
        + 用户请求登录，服务器验证成功后，根据JWT算法生成一个token信息，并返回格客户端
-       + 客户端吧token存储起来，可以存在cookie/sessionStorage/localStorage/vuex...
+       + 客户端把token存储起来，可以存在cookie/sessionStorage/localStorage/vuex...
          下一次请求时客户端再把token带上，服务器再进行校验
        好处：服务器不用储存，重启服务器不会失效，客户端不需要携带资源凭证，稳定，安全
 */

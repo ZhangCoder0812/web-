@@ -12,9 +12,6 @@
             + get/post/head/options/delete/put/patch 发送对应方式的请求 
             + request 发送请求
             + interceptors 拦截器 「request请求拦截器/response响应拦截器」
-             
-         
-  
   */
 let formData = new FormData();
 formData.append("name", "xxx");
@@ -117,7 +114,6 @@ axios
      + 服务返回的状态码和validateStatus规定的状态码不一致
      + 请求超时/被取消
      + 断网
-
 
   请求的成功/失败：
      1. 网络层失败，请求没有发送成功 或者 没有任何的响应 「没有完成一个完整的HTTP请求」

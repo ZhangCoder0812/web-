@@ -102,8 +102,8 @@ class Promise {
       typeof onrejected === 'function'
         ? onrejected
         : (err) => {
-            throw err; // 这里必须要加{} 抛出错不能被return 出来
-          };
+          throw err; // 这里必须要加{} 抛出错不能被return 出来
+        };
 
     let promise2 = new Promise((resolve, reject) => {
       if (this.status === STATUS.FULFILLED) {
