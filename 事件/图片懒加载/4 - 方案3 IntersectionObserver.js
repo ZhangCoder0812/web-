@@ -5,7 +5,7 @@
   缺点：不兼容
  
 */
-let imageModule = (function() {
+let imageModule = (function () {
     let columns = Array.from(document.querySelectorAll(".column")),
         loadingBox = document.querySelector(".loadingBox"),
         lazyImageBoxs;
@@ -28,7 +28,7 @@ let imageModule = (function() {
     );
 
     // 监听触底加载更多数据
-    const watchBottom = function() {
+    const watchBottom = function () {
         let obLoading = new IntersectionObserver(async changes => {
             let item = changes[0];
             if (item.isIntersecting) {
@@ -78,12 +78,12 @@ let imageModule = (function() {
     };
 
     // 单张图片加载 传入图片外层的盒子
-    const singleImgLoading = function(imgBox) {
+    const singleImgLoading = function (imgBox) {
         let img = imgBox.querySelector("img"),
             trueImg = img.getAttribute("data-img"),
             tempImg = new Image(); // 临时创建img 保证图片能加载成功才赋值
         tempImg.src = trueImg;
-        tempImg.onload = function() {
+        tempImg.onload = function () {
             img.src = trueImg;
             img.style.opacity = 1;
         };
@@ -91,7 +91,7 @@ let imageModule = (function() {
     };
 
     //根据图片在视口中的位置 控制哪些图片懒加载
-    const lazyImgsFunc = function() {
+    const lazyImgsFunc = function () {
         // 监听盒子
         lazyImageBoxs // 筛选出没有被监听过的盒子
             .filter(imgBox => {

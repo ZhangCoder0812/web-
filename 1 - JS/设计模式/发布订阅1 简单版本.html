@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      (function () {
-        // 事件池
-        let pond = [];
-        // 向事件池中添加方法
-        function subscribe(fn) {
-          if (!pond.includes(fn)) {
-            pond.push(fn);
-          }
-          // 每次添加都返回一个移除当前添加的一个方法
-          return function unSubscribe() {
-            pond = pond.filter((item) => item !== fn);
-          };
-        }
-        // 通知事件池中方法执行
-        subscribe.fire = function (...params) {
-          pond.forEach((item) => {
-            if (typeof item === "function") {
-              item(...params);
-            }
-          });
-        };
-        window.subscribe = subscribe;
-      })();
 
-      let unSubscribe1 = subscribe((...params) => {
-        console.log(1, ...params);
-      });
-      subscribe(() => {
-        console.log(2);
-        unSubscribe1();
-      });
-      subscribe(() => {
-        console.log(3);
-      });
-      subscribe(() => {
-        console.log(4);
-      });
-      setTimeout(() => {
-        subscribe.fire(10, 20, 30);
-        console.log("--------");
-        subscribe.fire();
-      }, 2000);
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    (function () {
+      // 事件池
+      let pond = [];
+      // 向事件池中添加方法
+      function subscribe(fn) {
+        if (!pond.includes(fn)) {
+          pond.push(fn);
+        }
+        // 每次添加都返回一个移除当前添加的一个方法
+        return function unSubscribe() {
+          pond = pond.filter((item) => item !== fn);
+        };
+      }
+      // 通知事件池中方法执行
+      subscribe.fire = function (...params) {
+        pond.forEach((item) => {
+          if (typeof item === "function") {
+            item(...params);
+          }
+        });
+      };
+      window.subscribe = subscribe;
+    })();
+
+    let unSubscribe1 = subscribe((...params) => {
+      console.log(1, ...params);
+    });
+    subscribe(() => {
+      console.log(2);
+      unSubscribe1();
+    });
+    subscribe(() => {
+      console.log(3);
+    });
+    subscribe(() => {
+      console.log(4);
+    });
+    setTimeout(() => {
+      subscribe.fire(10, 20, 30);
+      console.log("--------");
+      subscribe.fire();
+    }, 2000);
+  </script>
+</body>
+
 </html>

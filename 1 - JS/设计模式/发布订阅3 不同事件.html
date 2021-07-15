@@ -1,79 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      let sub = (function () {
-        let pond = {};
-        // 向事件池中添加指定类型的方法
-        const on = function (type, fn) {
-          if (!Array.isArray(pond[type])) {
-            pond[type] = [];
-          }
-          let arr = pond[type];
-          if (!arr.includes(fn)) {
-            arr.push(fn);
-          }
-        };
-        // 从事件池中移除指定类型的方法
-        const off = function (type, fn) {
-          let arr = pond[type];
-          if (!Array.isArray(arr)) {
-            throw new TypeError(`${type}自定义事件在事件池中不存在`);
-          }
-          pond[type] = arr.filter((item) => item !== fn);
-        };
-        // 通知事件池中指定类型的方法执行
-        const emit = function (type, ...params) {
-          let arr = pond[type];
-          if (!Array.isArray(arr)) {
-            throw new TypeError(`${type}自定义事件在事件池中不存在`);
-          }
-          arr.forEach((item) => {
-            if (typeof item === "function") {
-              item(...params);
-            }
-          });
-        };
-        return {
-          on,
-          off,
-          emit,
-        };
-      })();
 
-      let c1 = () => console.log(1);
-      let c2 = () => {
-        console.log(2);
-        sub.off("A", c1);
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let sub = (function () {
+      let pond = {};
+      // 向事件池中添加指定类型的方法
+      const on = function (type, fn) {
+        if (!Array.isArray(pond[type])) {
+          pond[type] = [];
+        }
+        let arr = pond[type];
+        if (!arr.includes(fn)) {
+          arr.push(fn);
+        }
       };
-      let c3 = () => console.log(3);
-      let c4 = () => console.log(4);
-      let c5 = () => console.log(5);
-      let c6 = () => console.log(6);
+      // 从事件池中移除指定类型的方法
+      const off = function (type, fn) {
+        let arr = pond[type];
+        if (!Array.isArray(arr)) {
+          throw new TypeError(`${type}自定义事件在事件池中不存在`);
+        }
+        pond[type] = arr.filter((item) => item !== fn);
+      };
+      // 通知事件池中指定类型的方法执行
+      const emit = function (type, ...params) {
+        let arr = pond[type];
+        if (!Array.isArray(arr)) {
+          throw new TypeError(`${type}自定义事件在事件池中不存在`);
+        }
+        arr.forEach((item) => {
+          if (typeof item === "function") {
+            item(...params);
+          }
+        });
+      };
+      return {
+        on,
+        off,
+        emit,
+      };
+    })();
 
-      sub.on("A", c1);
-      sub.on("A", c2);
-      sub.on("A", c3);
-      setTimeout(() => sub.emit("A"), 1000);
-      setTimeout(() => sub.emit("A"), 2000);
+    let c1 = () => console.log(1);
+    let c2 = () => {
+      console.log(2);
+      sub.off("A", c1);
+    };
+    let c3 = () => console.log(3);
+    let c4 = () => console.log(4);
+    let c5 = () => console.log(5);
+    let c6 = () => console.log(6);
 
-      sub.on("B", c4);
-      sub.on("B", c5);
-      sub.on("B", c6);
-      setTimeout(() => sub.emit("B"), 3000);
+    sub.on("A", c1);
+    sub.on("A", c2);
+    sub.on("A", c3);
+    setTimeout(() => sub.emit("A"), 1000);
+    setTimeout(() => sub.emit("A"), 2000);
 
-      let obj = { A: [1, 2, 3] };
-      let arr = obj.A;
-      arr = arr.filter((item) => item !== 1);
-      // arr.push(4)
-      console.log(arr);
-      console.log(obj.A);
-    </script>
-  </body>
+    sub.on("B", c4);
+    sub.on("B", c5);
+    sub.on("B", c6);
+    setTimeout(() => sub.emit("B"), 3000);
+
+    let obj = { A: [1, 2, 3] };
+    let arr = obj.A;
+    arr = arr.filter((item) => item !== 1);
+    // arr.push(4)
+    console.log(arr);
+    console.log(obj.A);
+  </script>
+</body>
+
 </html>

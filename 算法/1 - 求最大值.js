@@ -7,7 +7,7 @@ console.log(arr[0]);
 // 方式二 Math.max 参数一个个传 不能是一个数组
 console.log(Math.max(...arr));
 
-// 方式三
+// 方式三 apply内部会将数组打散
 console.log(Math.max.apply(Math, arr));
 
 // 方式四 假设法

@@ -66,15 +66,15 @@
           _this.onrejectedCallbacks.push(onrejected);
       }
     },
-    catch: function () {},
-    finally: function () {},
+    catch: function () { },
+    finally: function () { },
   };
 
   // 静态属性
-  Promise.resolve = function () {};
-  Promise.reject = function () {};
-  Promise.all = function () {};
-  Promise.any = function () {};
+  Promise.resolve = function () { };
+  Promise.reject = function () { };
+  Promise.all = function () { };
+  Promise.any = function () { };
 
   if (typeof Symbol !== "undefined") {
     Promise.prototype[Symbol.toStringTag] = "Promise";

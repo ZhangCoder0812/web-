@@ -76,7 +76,7 @@ new Promise((resolve, reject) => {
      catch 就是then方法中去掉成功的回调，
      项目中链式写法then中只写成功的回调 最后再写catch 可以统一捕获到失败。
      不管哪一步失败最后的catch都可以捕获到。
-     若之前then失败且写来失败的回调 则不会被catcg捕获到。
+     若之前then失败且写了失败的回调 则不会被catch捕获到。
 
     */
   });

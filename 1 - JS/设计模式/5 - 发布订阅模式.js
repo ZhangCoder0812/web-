@@ -15,38 +15,39 @@
       
 */
 
-const fs = require("fs");
-let obj = {};
+function getData(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(time), time * 1000)
+  })
+}
 
-let eventObj = {
-  arr: [],
+let res = []
+
+let eventBus = {
+  pond: [],
+  // 订阅
   on(fn) {
-    // 订阅
-    this.arr.push(fn);
+    this.pond.push(fn)
   },
+  // 发布
   emit() {
-    // 发布
-    this.arr.forEach((fn) => {
-      if (typeof fn === "function") {
-        fn();
-      }
-    });
-  },
-};
+    this.pond.forEach(fn => fn())
+  }
+}
 
 // 被动 读取完成强制触发 我们才收到消息
-eventObj.on(() => {
-  if (Object.keys(obj).length == 2) {
-    console.log("数据读取完毕", obj);
+eventBus.on(() => {
+  console.log('xxxxxxxx')
+  if (res.length === 2) {
+    console.log('数据请求完成', res)
   }
-});
+})
 
-fs.readFile("name.txt", "utf8", function (err, data) {
-  obj.name = data;
-  eventObj.emit();
-});
-
-fs.readFile("age.txt", "utf8", function (err, data) {
-  obj.age = data;
-  eventObj.emit();
-});
+getData(2).then(() => {
+  res[0] = 2
+  eventBus.emit()
+})
+getData(6).then(() => {
+  res[1] = 2
+  eventBus.emit()
+})

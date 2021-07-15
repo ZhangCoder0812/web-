@@ -58,18 +58,18 @@ new Promise((resolve) => {
   .then(() => {
     console.log("then12");
   });
-/* 
-  
+/*
+
   return的结果是最后一个.then的返回值 并不是第一个.then结果的返回值，
   then12执行要等到外层的第一个then中promise所有的then执行完才会执行。
   因为then12成功还是失败取决于上一个then的返回结果。
-  
-  
+
+
   promise1
   then11
   promise2
   then21
   then22
   then12
-  
+
   */

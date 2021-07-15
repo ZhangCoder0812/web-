@@ -132,7 +132,7 @@
     catch: function (onrejected) {
       return this.then(null, onrejected);
     },
-    finally: function () {},
+    finally: function () { },
   };
 
   // 静态属性
@@ -180,7 +180,7 @@
       }
     });
   };
-  Promise.any = function () {};
+  Promise.any = function () { };
 
   if (typeof Symbol !== "undefined") {
     Promise.prototype[Symbol.toStringTag] = "Promise";

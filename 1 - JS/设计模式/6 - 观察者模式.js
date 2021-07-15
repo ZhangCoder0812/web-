@@ -5,7 +5,7 @@
    将所有的观察者放到被观察者中（基于发布订阅）
 
    小宝宝哭了喊爸爸，小宝宝要把爸爸记住 把爸爸收集起来 哭了就通知爸爸（主动的通知）
-    小爸爸（被观察者） 爸爸（观察者）
+   小宝宝（被观察者） 爸爸（观察者）
 
 */
 
@@ -47,9 +47,32 @@ baby.attach(mom);
 baby.setStatus('我哭了');
 
 /*
-vue 依赖收集用的是观察者模式 组建通信用的是发布订阅 $on $emit
-redux 用的是发布订阅
+    vue 依赖收集用的是观察者模式 组建通信用的是发布订阅 $on $emit
+    redux 用的是发布订阅
 
-观察者包含发布订阅
-发布订阅不包含观察者
+    观察者包含发布订阅
+    发布订阅不包含观察者
 */
+
+//============== 简版 ===============
+
+let dad = {
+  name: '爸爸',
+  notify() {
+    console.log('爸爸我哭了')
+  }
+}
+
+let baby = {
+  name: '小宝宝',
+  observers: [],
+  collect(ctx) {
+    this.observers.push(ctx)
+  },
+  cry() {
+    this.observers.forEach(ctx => ctx.notify())
+  }
+}
+
+baby.collect(dad)
+baby.cry()

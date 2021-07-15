@@ -27,7 +27,7 @@ fn(2);
     constructor: jQuery,
   };
   // 中间转换
-  function init(selector, context, root) {}
+  function init(selector, context, root) { }
   jQuery.fn.init = init;
   init.prototype = jQuery.fn;
 })();

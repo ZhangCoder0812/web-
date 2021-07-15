@@ -10,7 +10,7 @@ let class2type = {},
 */
 
 /* ----------------------- isFunction  检测是否是函数 ------------------------- */
-const isFunction = function(obj) {
+const isFunction = function (obj) {
     return (
         typeof obj === "function" &&
         typeof obj.nodeType !== "number" &&
@@ -19,7 +19,7 @@ const isFunction = function(obj) {
 };
 
 /* ----------------------- isWindow  检测是否是window ------------------------- */
-const isWindow = function(obj) {
+const isWindow = function (obj) {
     /* 
          window 中有个key为window 值也是window 
          window:{
@@ -83,7 +83,7 @@ arrType.forEach(name => {
     };
  */
 
-const toType = function(obj) {
+const toType = function (obj) {
     if (obj == null) return obj + "";
     let type = typeof obj;
     if (/(object|function)/i.test(type)) {
@@ -97,7 +97,7 @@ const toType = function(obj) {
 // console.log(toType(1));
 
 /* -----------------------  isPlainObject 检测是否是一个纯粹对象 ------------------------- */
-const isPlainObject = function(obj) {
+const isPlainObject = function (obj) {
     let proto, Ctor;
     if (!obj || toString.call(obj) !== "[object Object]") {
         // 没传或者传的不是对象数据类型 返回false
@@ -129,7 +129,7 @@ const isPlainObject = function(obj) {
  */
 
 // 自定义 isEmptyObject  考虑Symbol属性
-const isEmptyObject = function(obj) {
+const isEmptyObject = function (obj) {
     if (!obj || !/(object|function)/i.test(typeof obj)) {
         // 传入的不是对象类型
         return false;
@@ -144,13 +144,13 @@ const isEmptyObject = function(obj) {
 
 /* ----------------------- isNumeric 检测是否是一个有效数字 ----------------------- */
 //  10 或者 new Number(10) 或者 '10' ,'10a'不是有效数字
-const isNumeric = function(obj) {
+const isNumeric = function (obj) {
     let type = toType(obj);
     return (type === "number" || type === "string") && !isNaN(obj);
 };
 
 /* --------------------  isArrayLike  检测是否是数组或类数组  ------------------- */
-const isArrayLike = function(obj) {
+const isArrayLike = function (obj) {
     // 判断是否存在 是否有length属性 获取length属性
     var length = !!obj && "length" in obj && obj.length,
         type = toType(obj);
@@ -169,7 +169,7 @@ const isArrayLike = function(obj) {
 /* --------------------  jsonToUrl  把json数据变成urlencoded格式  ------------------- */
 function jsonToUrl(json) {
     return Object.keys(json)
-        .map(function(key) {
+        .map(function (key) {
             // body...
             return encodeURIComponent(key) + "=" + encodeURIComponent(json[key]);
         })
@@ -178,13 +178,13 @@ function jsonToUrl(json) {
 
 /* --------------------  each  遍历对象/数组/类数组  ------------------- */
 
-const each = function(obj, callback) {
+const each = function (obj, callback) {
     if (obj == null || typeof obj !== "object") {
         throw new TypeError("obj must be Array/ArrayLike/Object");
     }
     if (typeof callback !== "function") {
         // 传入的callback不是函数就赋值个函数 防止报错
-        callback = function() {};
+        callback = function () { };
     }
     let i = 0;
     if (isArrayLike(obj)) {
@@ -225,7 +225,7 @@ const each = function(obj, callback) {
     
     Object.assign({},obj1,obj2)  这样obj1，obj2都不会被改变。
 */
-const merge = function() {
+const merge = function () {
     let options, // 拿哪个对象替换它
         target = arguments[0] || {}, // 传入的第一个参数，要被替换的对象
         i = 1, //如果target为布尔值 则从第二个参数开始才是要合并的对象

@@ -61,7 +61,7 @@ class TaskQueue {
         }
     }
 }
-const createRequest = function(taskList, limit, callback) {
+const createRequest = function (taskList, limit, callback) {
     if (!Array.isArray(taskList)) throw new TypeError("taskList must be Array");
     // limit可能没传 默认为2
     if (typeof limit === "function") {

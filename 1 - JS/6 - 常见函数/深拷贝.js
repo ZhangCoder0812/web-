@@ -30,7 +30,7 @@
 
 */
 
-// WeakMap只接受对象作为键名
+// WeakMap weak弱 弱的Map 只接受对象作为键名
 
 function deepClone(obj, hash = new WeakMap()) {
     // WeakMap es6 这里借助用来放置死循环 自己引用自己
@@ -61,3 +61,21 @@ obj.name = 'lbj'
 obj.address.x = 300
 console.log(obj) // { name: 'lbj', address: { x: 300, y: 200 } }
 console.log(o) // { name: 'wade', address: { x: 100, y: 200 } }
+
+
+/// 或者使用数组 循环引用问题 只需记录一下是否处理过就行了
+function deepClone(obj, cache = []) {
+    if (obj == null) return obj
+    if (obj instanceof RegExp) return new RegExp(obj)
+    if (obj instanceof Date) return new Date(obj)
+    if (typeof obj !== 'object') return obj
+    if (cache.includes(obj)) return obj
+    let cloneObj = {}
+    cache.push(obj)
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], cache)
+        }
+    }
+    return cloneObj
+}
