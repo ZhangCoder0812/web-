@@ -26,4 +26,4 @@ Vue.directive("perssion", {
     },
 });
 
-//使用 v-perssion=''4"
+//使用 v-perssion="4"

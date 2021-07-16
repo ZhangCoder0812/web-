@@ -14,13 +14,12 @@
 
   由于webpack是按依赖打包的，用得到就打包，用不到就不会打包，所以一般装在哪个环境都一样 
   并不会影响打包后的体积，只有vue分了一下dependencies/devDependencies，而react根本
-  就没有分，所以装在哪个环境都一样。什么都不假默认装在dependencies下            
+  就没有分，所以装在哪个环境都一样。什么都不加默认装在dependencies下            
 
 
 */
 
 /* 
-
 
  webpack 基于node编写 开箱即用 可以什么都不写 
 
@@ -46,7 +45,7 @@
   
   若是打包后的文件名字不是index.html 项目启动后页面上你看到的是一堆
   文件夹，因为默认找的是index.html。打包后的文件名设置成index.html
-  就可以直接预览了。项目启动后访问打包后额html不用加dist文件夹
+  就可以直接预览了。项目启动后访问打包后的html不用加dist文件夹
   http://localhost:8080/xxx.html  
   
    

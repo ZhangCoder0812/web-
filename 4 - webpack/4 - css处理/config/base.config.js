@@ -32,7 +32,7 @@ module.exports = {
             //     use: "css-loader",
             // },
             // {
-            //     // 只用 css-loader 芮然webpack认识了 但是样式还加载不出来 没有插入到页面中
+            //     // 只用 css-loader 虽然webpack认识了 但是样式还加载不出来 没有插入到页面中
             //     // 要配合 style-loader 一起使用 能把认识的css插入到页面中
             //     // 即 将引入的样式文件变成style标签插入到body中
             //     // 直接安装 style-loader 即可 不用再webpack中引入
@@ -47,7 +47,7 @@ module.exports = {
                 use: [miniCssExtractPlugin.loader, "css-loader"],
             },
             {
-                // 编译less 要先把less编译次css 在把css插入到页面中
+                // 编译less 要先把less编译成css 再把css插入到页面中
                 // npm install less-loader less 直接安装即可 不用再webpack中引入
                 // less也要装因为less-loader使用/依赖less，不装的话会报找不到less module
                 // use 后面可以是 字符串 数组 对象

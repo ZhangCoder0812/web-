@@ -19,7 +19,7 @@ module.exports = {
         /* 
         bundle.[fullhash].js 生成文件名带有hash 避免使用缓存。
         fullhash/chunkhash/contenthash 之前用的是[hash] 新版webpack改名了
-        undle.[fullhash:5].js 设置hash长度为5
+        bundle.[fullhash:5].js 设置hash长度为5
       */
         filename: "bundle.[fullhash:6].js",
         /* 
@@ -38,7 +38,7 @@ module.exports = {
         new htmlWebpackPlugin({
             template: "./public/index.html", // 指定html模版 不指定默认生成index.html
             filename: "index.html", // 指定生层的html名字 默认index.html
-            title: "xxx", // 修改模版中的title 模版中国要配置ejs语法
+            title: "xxx", // 修改模版中的title 模版中要配置ejs语法
             xxx: '<link href="xxx.css"></link>',
         }),
         // DefinePlugin 提供编译阶段的全局常量/变量，webpack自带的插件
