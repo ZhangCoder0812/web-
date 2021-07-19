@@ -14,7 +14,7 @@
 
   3. 利用image-webpack-loader 压缩图片
 
-  4. 引入DllPlugin 和 DllReferencePlugin 动态链接库 分离出不需要跟新的包
+  4. 引入DllPlugin 和 DllReferencePlugin 动态链接库 分离出不需要更新的包
 
   5. thread-loader 多进程打包
 

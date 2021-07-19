@@ -29,7 +29,7 @@ const install = _Vue => {
 
 class Store {
     constructor(options) {
-        // options: state mutation action ...\
+        // options: state mutation action ...
         let vm = new Vue({
             data() {
                 return {
@@ -55,7 +55,7 @@ class Store {
 export function mapState(arr) {
     let obj = {};
     arr.forEach(key => {
-        obj[key] = function() {
+        obj[key] = function () {
             return this.$store.state[key]; // this 组件实例
         };
     });
@@ -65,7 +65,7 @@ export function mapState(arr) {
 export function mapMutations(arr) {
     let obj = {};
     arr.forEach(key => {
-        obj[key] = function(n) {
+        obj[key] = function (n) {
             return this.$store.commit(key, n);
         };
     });
