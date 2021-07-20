@@ -28,18 +28,13 @@
 function myNew(Ctor, ...params) {
   // 或者  let [Ctor, params] = [...arguments]
   // Ctor(构造函数) 若是Symbol 或 BigInt 或 没有原型 或 不是一个函数 就报错
-  if (
-    Ctor === Symbol ||
-    Ctor === BigInt ||
-    !Ctor.prototype ||
-    typeof Ctor !== "function"
-  ) {
+  if (Ctor === Symbol || Ctor === BigInt || !Ctor.prototype || typeof Ctor !== "function") {
     throw TypeError(`${Ctor} is not a constructor`);
   }
   let obj = Object.create(Ctor.prototype); // obj.__proto__ = Ctor.prototype 低版本IE不兼容
   /* 或者   
     let obj = {}
-    Object.setPrototypeOf(obj , Ctor.prototype)
+    Object.setPrototypeOf(obj , Ctor.prototype)   
   */
   let res = Ctor.call(obj, ...params);
   return res instanceof Object ? res : obj;
