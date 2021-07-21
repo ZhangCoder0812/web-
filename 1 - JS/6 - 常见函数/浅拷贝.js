@@ -18,7 +18,7 @@
       
   深拷贝：
      jquery -> extend()
-     JSON,parse
+     JSON.parse()
      递归
 
 */

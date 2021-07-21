@@ -1,25 +1,15 @@
-Promise.resolve()
-    .then(() => {
-        console.log(0);
-        return Promise.resolve(4);
-    })
-    .then(res => {
-        console.log(res);
-    });
-
-Promise.resolve()
-    .then(() => {
-        console.log(1);
-    })
-    .then(() => {
-        console.log(2);
-    })
-    .then(() => {
-        console.log(3);
-    })
-    .then(() => {
-        console.log(5);
-    })
-    .then(() => {
-        console.log(6);
-    });
+function deepClone(obj, hash = new WeakMap()) {
+    if (obj == null) return obj;
+    if (obj instanceof RegExp) return new RegExp(obj);
+    if (obj instanceof Date) return new Date(obj);
+    if (typeof obj !== "object") return obj;
+    if (hash.get(obj)) return hash.get(obj);
+    let cloneObj = new obj.constructor();
+    hash.set(obj, cloneObj);
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], hash);
+        }
+    }
+    return cloneObj;
+}
