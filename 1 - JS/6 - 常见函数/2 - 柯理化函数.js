@@ -78,4 +78,3 @@ console.log(res); // 在页面使用就会转化为字符串
 add = curring();
 res = add(1, 2)(3);
 console.log(res);
- 
