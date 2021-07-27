@@ -26,7 +26,7 @@ class XhrHook {
     init() {
         let _this = this;
         //这个不能用箭头函数 因为使用的时候要new
-        window.XMLHttpRequest = function() {
+        window.XMLHttpRequest = function () {
             this._xhr = new _this.XHR();
             _this.overwrite(this);
         };
@@ -65,17 +65,17 @@ class XhrHook {
     setProperyDescriptor(key, proxyXHR) {
         let obj = Object.create(null);
         let _this = this;
-        obj.get = function() {
+        obj.get = function () {
             return proxyXHR["_" + key] || this._xhr[key];
         };
-        obj.set = function(val) {
+        obj.set = function (val) {
             // 重写以on开头的属性
             if (!key.startsWith("on")) {
                 proxyXHR["_" + key] = val;
                 return;
             }
             if (_this.beforeHooks[key]) {
-                this._xhr[key] = function(...args) {
+                this._xhr[key] = function (...args) {
                     _this.beforeHooks[key].call(proxyXHR);
                     val.apply(proxyXHR, args);
                 };
@@ -88,17 +88,17 @@ class XhrHook {
 }
 
 new XhrHook({
-    open: function() {
+    open: function () {
         console.log("open");
         // return false; // 返回false不执行下面逻辑 true继续向下执行
     },
-    onload: function() {
+    onload: function () {
         console.log("onload");
     },
-    onreadystatechange: function() {
+    onreadystatechange: function () {
         console.log("onreadystatechange");
     },
-    onerror: function() {
+    onerror: function () {
         console.log("onerror");
     },
 });
@@ -110,10 +110,10 @@ xhr.open("GET", "https://www.baidu.com", true);
 xhr.send();
 
 // onreadystatechange是属性 是我们手动赋值的方法
-xhr.onreadystatechange = function(res) {
+xhr.onreadystatechange = function (res) {
     console.log("statechange");
 };
 
-xhr.onerror = function(res) {
+xhr.onerror = function (res) {
     console.log("error");
 };

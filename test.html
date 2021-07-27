@@ -9,10 +9,38 @@
 </html>
 <script>
 
+  class EventEmitter {
+    constructor() {
+      this.events = {}
+    }
+    emit(event, ...args) {
 
-  if (!('a' in window)) {
-    var a = 100
+    }
+    on(event, cb) {
+      if (!this.events[event]) {
+        this.events[event] = []
+      }
+      this.events[event].push(cb)
+    }
+    off() {
+
+    }
   }
-  console.log(a)
+
+
+  const add = (a, b) => console.log(a + b);
+  const log = (...args) => console.log(...args);
+  let event = new EventEmitter()
+
+  event.on("add", add);
+  event.on("log", log);
+  event.emit("add", 1, 2); // 3
+  event.emit("log", "hi~~"); // hi~~
+  event.off("add");
+  event.emit("add", 1, 2); // 没有这事件
+  event.once("once", add);
+  event.once("once", 1, 2);
+  event.once("once", 1, 2);
+  event.once("once", 1, 2);
 
 </script>
